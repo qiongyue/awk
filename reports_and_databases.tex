@@ -345,7 +345,7 @@ Report No. 3       POPULATION, AREA, POPULATION DENSITY         January 1, 1988
 一种可选的方案是让某个程序去计算量的大小, 然后再根据你的需求进行调整 
 \footnote{原文为 An alternative is to let a program compute how big things
 are, then do the positioning for you.}. 为打印机写一个 awk 程序, 该程序
-对简单的表格进行格式化 ---- 这是一种可行的做法, 我们待会儿再回来讨论.
+对简单的表格进行格式化 --- 这是一种可行的做法, 我们待会儿再回来讨论.
 因为用的是 Unix 系统与排版程序, 所以我们可以用一些已经存在的工具 ----
 \texttt{tbl} 程序可以对表格进行格式化. 程序 \verb'form4' 非常类似于
 \verb'form3', 但是它没有用于控制列宽度的魔数, 相反, 它生成了一些 
@@ -417,7 +417,7 @@ are, then do the positioning for you.}. 为打印机写一个 awk 程序, 该程
 方式在列中打印项目, 如果是数值, 则右对齐, 并且在同一列中, 每一行的列宽度
 都是相同的 (都等于该列宽度的最大值). 如果给定头部与输入文件
 \filename{countries}, 程序的输出是\footnote{\filename{countries} 原来没有
-头部, 需要手工加上 ---- 译者注}:
+头部, 需要手工加上 --- 译者注}:
 \begin{shell}
     COUNTRY   AREA   POPULATION   CONTINENT    
     USSR      8649       275      Asia         
@@ -698,7 +698,7 @@ for each form letter that is generated.}. 例如, 下面的文本使用了参数
     \item 数据库可以分散在多个文件中, 而不是限定在一个文件上.
     \item 可以交互性地生成一个查询序列.
 \end{itemize}
-使用名字 (而非数字) 引用字段的优势是显而易见的 ---- \verb'$area' 看起来
+使用名字 (而非数字) 引用字段的优势是显而易见的 --- \verb'$area' 看起来
 比 \verb'$2' 更加自然, 但是, 把一个数据库分散存储在若干个文件中的优点
 就没那么容易看出来. 多个文件组成的数据库维护起来更容易, 这主要是因为编辑
 一个只含有少量字段的文件, 要比编辑一个包含全部字段的文件容易得多. 另外,
@@ -711,7 +711,7 @@ for each form letter that is generated.}. 例如, 下面的文本使用了参数
 的文件 \filename{countries} 组成, 文件的每一行都包括四个字段, 字段的名字
 分别是 \verb'country', \verb'area', \verb'population', 以及
 \verb'continent'. 现在我们打算在数据库中新增一个文件 \filename{capitals},
-文件的每一行都由两个字段组成 ---- 国家及其首都:
+文件的每一行都由两个字段组成 --- 国家及其首都:
 \begin{shell}
     USSR    Moscow
     Canada  Ottawa
@@ -758,7 +758,7 @@ for each form letter that is generated.}. 例如, 下面的文本使用了参数
 (\term{attribute}), 所以我们可以认为表格 \verb'capitals' 具有属性
 \verb'country' 与 \verb'capital'.
 
-一个 \cterm{自然连接} (\term{natural join}) (或简称为 \cterm{连接}), 指的是 
+一个 \cterm{自然连接} (\term{natural join}) (或简称为 \cterm{连接}) 指的是 
 一个运算, 它将两张表以公共属性为基础组合成一张表, 这张表包含了两张表所有
 的属性, 但是重复的属性会被移除. 如果我们把 \verb'countries' 与
 \verb'capitals' 这两张表作自然连接, 我们就会得到一张新表 (姑且称为
@@ -782,3 +782,192 @@ for each form letter that is generated.}. 例如, 下面的文本使用了参数
 \begin{awkcode}
     $continent ~ /Asia/ { print $country, $population, $capital }
 \end{awkcode}
+我们将 表 \verb'countries' 与 表 \verb'capitals'  作连接, 再将查询应用到
+连接结果上, 通常来说, 完成这些操作最关键的地方在于将哪些表作连接.
+
+实际的连接操作可以通过 Unix 命令 \texttt{join} 来完成, 但是如果你的系统上
+没有该命令, 可以用这里提供的一个 用 awk 实现的简易版本. 它将两个文件按照
+各自的第一个字段进行连接, 比如下面两张表
+
+\begin{center}
+\begin{tabular}{c|c|c}
+    \hline
+    \hline
+    ATT1    & ATT2 & ATT3 \\
+    \hline
+    \texttt{A}       & \texttt{w}    & \texttt{p}    \\
+    \texttt{B}       & \texttt{x}    & \texttt{q}   \\
+    \texttt{B}      & \texttt{y}    & \texttt{r}    \\
+    \texttt{C}      & \texttt{z}    & \texttt{s}    \\
+    \hline
+\end{tabular}
+\hspace{2em}
+\begin{tabular}{c|c}
+    \hline
+    \hline
+    ATT1    & ATT4 \\
+    \hline
+    \texttt{A}       & \texttt{1}   \\  
+    \texttt{A}       & \texttt{2}   \\
+    \texttt{B}      & \texttt{3}    \\
+    \hline
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+作连接后得到
+\vspace{1em}
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+    \hline
+    \hline
+    ATT1        & ATT2  & ATT3   &   ATT4   \\
+    \hline
+    \texttt{A}  & \texttt{w}    & \texttt{p} &  \texttt{1}  \\
+    \texttt{A}  & \texttt{w}    & \texttt{p} &  \texttt{2}  \\
+    \texttt{B}  & \texttt{x}    & \texttt{q} &  \texttt{3}  \\
+    \texttt{B}  & \texttt{y}    & \texttt{r} &  \texttt{3}  \\
+\end{tabular}
+\end{center}
+\vspace{1em}
+
+\texttt{join} 不假定输入表格是等长的, 但是它会认为表格是有序的, 互相匹配的
+输入字段的每一种组合都会在输出中占据一行.
+\begin{awkcode}
+    # join - join file1 file2 on first field
+    #   input:  two sorted files, tab-separated fields
+    #   output: natural join of lines with common first field
+
+    BEGIN {
+        OFS = sep = "\t"
+        file2 = ARGV[2]
+        ARGV[2] = ""  # read file1 implicitly, file2 explicitly
+        eofstat = 1   # end of file status for file2
+        if ((ng = getgroup()) <= 0)
+            exit      # file2 is empty
+    }
+
+    {   while (prefix($0) > prefix(gp[1]))
+            if ((ng = getgroup()) <= 0)
+                exit  # file2 exhausted
+        if (prefix($0) == prefix(gp[1]))  # 1st attributes in file1
+            for (i = 1; i <= ng; i++)     #     and file2 match
+                print $0, suffix(gp[i])   # print joined line
+    }
+
+    function getgroup() { # put equal prefix group into gp[1..ng]
+        if (getone(file2, gp, 1) <= 0)    # end of file
+            return 0
+        for (ng = 2; getone(file2, gp, ng) > 0; ng++)
+            if (prefix(gp[ng]) != prefix(gp[1])) {
+                unget(gp[ng])    # went too far
+                return ng-1
+            }
+        return ng-1
+    }
+
+    function getone(f, gp, n) {  # get next line in gp[n]
+        if (eofstat <= 0) # eof or error has occurred
+            return 0
+        if (ungot) {      # return lookahead line if it exists
+            gp[n] = ungotline
+            ungot = 0
+            return 1
+        }
+        return eofstat = (getline gp[n] <f)
+    }
+
+    function unget(s)  { ungotline = s; ungot = 1 }
+    function prefix(s) { return substr(s, 1, index(s, sep) - 1) }
+    function suffix(s) { return substr(s, index(s, sep) + 1) }
+\end{awkcode}
+\marginpar{105}
+执行 \verb'join' 时, 需要向它传递两个参数, 它们都表示输入文件名.
+第一个属性值相同的行组成一个行组, 它们从第二个文件中读出, 如果第一个文件
+的某一行的前缀与某些行组的公共属性值相同, 那么行组中的每一行都会出现在
+输出中.
+
+函数 \texttt{getgroup} 把下一组前缀相同的行放入数组 \texttt{gp} 中, 它调用
+\texttt{getone} 来获取每一行, 如果发现获取到的行不属于本组, 就调用
+\texttt{unget} 将它放回. 我们把提取第一个属性值的代码局限在函数
+\texttt{prefix} 中, 这样以后改起来也比较方便.
+
+你应该注意一下函数 \texttt{getone} 与 \texttt{unget} 如何撤回一个输入行.
+在读取新行之前, \texttt{getone} 检查是否已经有一行被读取并由
+\texttt{unget} 存放在某个变量中, 如果是, 则返回该行. 撤回是解决过早遭遇
+问题 (在一次操作中, 读取了过多的输入\footnote{原文为 reading one too 
+many inputs.}) 的方法之一.
+在本章早些时候出现 的 control-break 程序中, 我们把处理操作延迟了, 而在这里,
+通过一对函数, 我们假定不会看到额外的输入.
+
+\begin{exercise}
+    本节实现的 \texttt{join} 不会进行错误检查, 也不会检查文件是否是有序的.
+    修复这些问题, 在修复之后, 程序会变得多大?
+\end{exercise}
+
+\begin{exercise}
+    实现 \texttt{join} 的另一个版本, 它将一个文件整个读入内存, 然后再执行 
+    连接操作. 与原来的版本相比, 哪个更简单?
+\end{exercise}
+
+\begin{exercise}
+    修改 \texttt{join}, 使得它可以按照输入文件的任意一个字段或字段组来
+    进行连接, 并可以按照任意的顺序, 有选择地输出某些字段.
+\end{exercise}
+
+\subsection{\texttt{relfile}}
+\marginpar{106}
+为了回答关于分散在多张表中的数据库的问题, 我们必须知道每张表中包含什么内容,
+我们把这些信息存储在名为 \texttt{relfile} 的文件中 (``rel'' 指的是
+``relation''). 文件 \texttt{relfile} 包含了数据库中每张表的名字, 属性,
+如果表格不存在, 那么文件还包含了构造表格的规则. 文件 \texttt{relfile} 的
+内容是一系列的表格描述符, 表格描述符具有形式:
+\begin{pattern}
+    \indent\textit{tablename} \par 
+    \indent\indent\textit{attribute} \par 
+    \indent\indent\textit{attribute} \par 
+    \indent\indent\indent ...   \par
+    \indent\indent\texttt{!}\textit{command} \par
+    \indent\indent\indent ...
+\end{pattern}
+\textit{tablename} 与 \textit{attribute} 都是字符串, 在 \textit{tablename} 
+之后是该表包含的属性名列表, 每一个属性名前面都有一个空格或制表符, 属性名
+之后是可选 的命令序列, 命令以感叹号开始, 它说明了如何构造这张表格.
+如果一张表不含构造命令, 则说明已经有一个文件以该表的名字命名, 且包含了
+该表的数据, 这样的表叫做 \cterm{基表} (\term{base table}), 数据被插入
+到基表中, 并在基表中更新. 在文件 \filename{relfile} 中, 如果某张表
+在属性名之后出现了构造命令, 则称这张表是 \cterm{导出表} (\term{derived
+table}), 只有在必要时才会构造导出表.
+
+我们使用下面的 \filename{relfile} 来表示扩展了的国家数据库:
+\begin{file}
+    countries:
+        country
+        area
+        population
+        continent
+    capitals:
+        country
+        capital
+    cc:
+        country
+        area
+        population
+        continent
+        capital
+        !sort countries >temp.countries
+        !sort capitals >temp.capitals
+        !join temp.countries temp.capitals >cc
+\end{file}
+这个文件说明数据库中有两张基表 --- \filename{countries} 与
+\filename{capitals}, 一张导出表 \filename{cc}, 导出表 \filename{cc} 通过 
+把基表排序并存放在临时文件中, 再对临时文件执行连接操作来生成, 也就是说, 
+\filename{cc} 通过执行
+\marginpar{107}
+\begin{shell}
+    sort countries >temp.countries
+    sort capitals >temp.capitals
+    join temp.countries temp.capitals >cc
+\end{shell}
+来生成.
