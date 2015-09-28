@@ -768,9 +768,19 @@ for each form letter that is generated.}. 例如, 下面的文本使用了参数
 \end{file}
 对于每一个同时出现在两张表中的国家来说, 我们都可以在 \verb'cc' 中找到一行
 记录, 它包含了国家的名称, 后面跟着面积, 所在大洲,
-以及国家的首都\footnote{TODO}:
-% TODO
+以及国家的首都:
 \begin{file}
+    Brazil  3286    134     South   America     Brasilia
+    Canada  3852    25      North   America     Ottawa
+    China   3705    1032    Asia                Beijing
+    England 94      56      Europe              London
+    France  211     55      Europe              Paris
+    Germany 96      61      Europe              Bonn
+    India   1267    746     Asia                New Delhi
+    Japan   144     120     Asia                Tokyo
+    Mexico  762     78      North   America     Mexico  City
+    USA     3615    237     North   America     Washington
+    USSR    8649    275     Asia                Moscow
 \end{file}
 
 我们实现连接运算的方法是根据它们的公共属性进行排序, 如果两张表的某一行的
@@ -1050,8 +1060,33 @@ awk 程序.
 的awk程序, 并把表格 $T_i$ 作为输入数据.
 
 对每一个查询, 第二个步骤都要重复一次, 下面这个流程图展示了 \texttt{qawk} 
-的轮廓\footnote{TODO}:
-% TODO
+的框架:
+\begin{center}
+\begin{tikzpicture}
+    \draw[thick] (0.0, 0.0) -- (2.0, 0.0) -- (2.0, 1.0) -- (0.0, 1.0)
+    -- (0.0, 0.0);
+    \draw[thick] (0.0, 3.0) -- (2.0, 3.0) -- (2.0, 4.0) -- (0.0, 4.0)
+    -- (0.0, 3.0);
+
+    \node at (1.0, 0.5) {awk};
+    \node at (1.0, 3.5) {\texttt{qawk}};
+    \node at (1.0, 2.0) {awk program};
+    \node at (4.0, 2.0) {input $T_i$};
+    \node at (1.0, -1.2) {answer};
+    \node at (1.0, 5.2) {\textit{q} query};
+    \node at (-1.8, 3.5) {\texttt{relfile}};
+
+    \draw[thick,->] (-1.0, 3.5) -- (0.0, 3.5);
+    \draw[thick,->] (1.0, 5.0) -- (1.0, 4.0);
+    \draw[thick,->] (1.0, 3.0) -- (1.0, 2.2);
+    \draw[thick,->] (1.0, 1.8) -- (1.0, 1.0);
+    \draw[thick,->] (1.0, 0.0) -- (1.0, -1.0);
+    \draw[thick] (2.0, 3.5) -- (4.0, 3.5);
+    \draw[thick,->] (4.0, 3.5) -- (4.0, 2.2);
+    \draw[thick] (4.0, 1.8) -- (4.0, 0.5);
+    \draw[thick,->] (4.0, 0.5) -- (2.0, 0.5);
+\end{tikzpicture}
+\end{center}
 
 \marginpar{109}
 这是 \texttt{qawk} 的源代码:
