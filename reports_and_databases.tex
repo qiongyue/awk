@@ -141,7 +141,7 @@ Awk 可以从文件中挑选数据, 并将挑选到的数据格式化成报表. 
 
 如果我们想要一个更加精美的输出, 其只打印大洲名字一次, 那么我们可以使用
 程序 \verb'form2':
-\begin{verbatim}
+\begin{myverb}
     # form2 - format countries by continent, pop. den.
 
     BEGIN { FS = ":"
@@ -157,13 +157,13 @@ Awk 可以从文件中挑选数据, 并将挑选到的数据格式化成报表. 
             printf("%-15s %-10s %7d %10d %10.1f\n",
                 $1, $2, $3, $4, $5)
           }
-\end{verbatim}
+\end{myverb}
 执行程序的命令行是
-\begin{verbatim}
+\begin{myverb}
     awk -f prep1 countries | awk -f form2
-\end{verbatim}
+\end{myverb}
 程序的输出是
-\begin{verbatim}
+\begin{myverb}
     CONTINENT       COUNTRY    POPULATION    AREA    POP. DEN.
 
     Asia            Japan          120        144      833.3
@@ -180,7 +180,7 @@ Awk 可以从文件中挑选数据, 并将挑选到的数据格式化成报表. 
                     Canada          25       3852        6.5
 
     South America   Brazil         134       3286       40.8
-\end{verbatim}
+\end{myverb}
 
 格式化程序 \verb'form2' 是一个 ``control-break'' 程序, 变量 \verb'prev'
 跟踪大洲的名字, 只有当大洲名字变化时才会打印出来. 在下一节, 我们将会看到
