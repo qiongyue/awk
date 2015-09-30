@@ -113,7 +113,7 @@
 \newcommand\cterm[1]{\textbf{#1}}
 
 % subsection unnumbered
-\CTEXsetup[number={}]{subsection}
+%\CTEXsetup[number={}]{subsection}
 
 % word that shows frequently
 \newcommand\awk{\texttt{awk}}
@@ -149,11 +149,11 @@
 \setlength{\parskip}{1ex}
 
 % 设置目录中 subsection 的缩进
-\settowidth\cftsubsecindent{2em}
+%\settowidth\cftsubsecindent{2em}
 % 设置目录中 chapter 章节编号的宽度 (ctex 章节编号为中文, 需要特别注意).
 % 参考 <<LaTeX 入门>>, 刘海洋 编著, 电子工业出版社, 2013.6
 \settowidth\cftchapnumwidth{第十章} % 最宽的可能编号
-\renewcommand\cftchapaftersnumb{\hspace{0.5em}} % 额外间距
+\renewcommand\cftchapaftersnumb{\hspace{0.1em}} % 额外间距
 
 \title{AWK 程序设计语言}
 \author{Alfred V.Aho \and Brian W.Kernighan \and Peter J.Weinberger \and
