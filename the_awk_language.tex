@@ -827,7 +827,7 @@ England 94      56      Europe
 割符) 与 \verb'OS' (\verb'OS' 控制输出的字段分割符) 为 制表符. 第 4 行的
 \print 语句打印可能被修改过的 \verb'$0'. 值得注意的是: 当 \verb'$0' 被
 \marginpar{36}
-修改或重新赋值 (同样的情况也可以发生在 \verb'$1', \verb'$2', 等等), \nf 
+修改或重新赋值 (同样的情况也可以发生在 \verb'$1', \verb'$2', 等等), \nf
 就会被重新计算; 同样的道理, 当 \verb'$1' --- 或 \verb'$2' 等 --- 被修改了,
 \verb'$0' 就会被重新构造, 构造的方式是使用 \OFS 重新分割字段.
 
@@ -1373,7 +1373,7 @@ England 94      56      Europe
 \end{myverb}
 \marginpar{46}
 向 \verb'OFMT' 赋予新值就可以修改它的默认值. 比如将 \verb'OFMT' 改为
-\verb'"%.2f"', 那么在打印数值, 以及通过强制转换而得到的数值之间进行比较时, 
+\verb'"%.2f"', 那么在打印数值, 以及通过强制转换而得到的数值之间进行比较时,
 小数点后将会保留两位小数.
 \begin{figure}[ht]
     \captionsetup{type=table}
@@ -1555,7 +1555,7 @@ Awk 提供花括号用于语句组合, \verb'if-else' 用于决策, \verb'while'
 \verb'do' 语句具有形式
 \begin{pattern}
     \verb'do'
-    \stmt\ 
+    \stmt\
     \verb'while ('\expr\verb')'
 \end{pattern}
 关键字 \verb'do' 与 \stmt 后面的换行符是可选的. 如果 \verb'while' 与 \stmt
@@ -1744,7 +1744,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 隔下标的各个构成成分, 它的默认值是 \verb'"\034"', 而不是 逗号, 之所以使用
 \verb'"\034"' 是因为这个字符不太可能出现在通常的文本中.
 
-为了测试一个多维下标是否是某个数组的成员, 我们需要将下标用括号括起来, 例如 
+为了测试一个多维下标是否是某个数组的成员, 我们需要将下标用括号括起来, 例如
 \begin{myverb}
     if ((i,j) in arr) ...
 \end{myverb}
@@ -1766,7 +1766,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
             \indent\indent\stmt \par
         \verb'}'
 \end{pattern}
-一个函数定义可以出现在任何 \patact 语句可以出现的地方. 于是, awk 程序的 
+一个函数定义可以出现在任何 \patact 语句可以出现的地方. 于是, awk 程序的
 通常形式就变成了一系列的, 由换行符或分号分开的 \patact 语句与函数定义.
 
 在一个函数定义中, 函数体左花括号后的换行符, 与右花括号前的换行符都是可选
@@ -1778,7 +1778,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \begin{pattern}
     \verb'return '\expr
 \end{pattern}
-\expr 与 \verb'return' 语句都是可选的, 如果没有为 \verb'return' 语句提供 
+\expr 与 \verb'return' 语句都是可选的, 如果没有为 \verb'return' 语句提供
 表达式, 或者最后一句执行的语句不是 \verb'return', 那么返回值就是未定义的.
 
 举例来说, 这个函数计算参数的最大值:
@@ -1793,7 +1793,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 
 用户定义的函数可以在任何 \patact 语句的任何表达式中使用, 也可以在出现在
 任何函数体内. 每一个对函数的使用都叫做一个 \emph{调用} (\emph{call}).
-如果一个用户定义的函数在函数体内调用了它自身, 
+如果一个用户定义的函数在函数体内调用了它自身,
 我们就说这个函数是 \emph{递归}
 (\emph{recursive}) 的.
 
@@ -1806,14 +1806,14 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \end{myverb}
 调用函数时, 函数名与左括号之间不能留有空白.
 
-一个带有参数 \verb'$1' 的函数被调用时 (\verb'$1' 只是一个普通的变量), 函数 
+一个带有参数 \verb'$1' 的函数被调用时 (\verb'$1' 只是一个普通的变量), 函数
 接收到的参数是变量的值的一份拷贝, 所以函数操作的是变量的拷贝, 而不是变量本
 身. 这意味着函数不会对函数体外部的变量的值产生影响. (用行话来说, 这样的变
-量叫做 ``标量'', ``按值传递'' 给函数) 然而, 当数组作为函数的参数时, 函数 
+量叫做 ``标量'', ``按值传递'' 给函数) 然而, 当数组作为函数的参数时, 函数
 接收到的参数就不是数组的拷贝, 所以函数可以改变数组的元素, 或往数组增添新
 的值 (这叫作 ``按引用传递''). 函数名不能当作参数使用.
 
-重申一遍, 在函数体内部, 参数是局部变量 --- 它们只在函数执行时才存在, 而且 
+重申一遍, 在函数体内部, 参数是局部变量 --- 它们只在函数执行时才存在, 而且
 它们与程序中其他同名的变量没有任何关联. 但是, \emph{其他所有的变量都是全
 局的} (\emph{all other variables are global}); 如果函数体内的某个变量没有
 出现在参数列表中, 那么整个程序范围内都可以访问该变量.
@@ -1826,7 +1826,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \section{输出}
 \label{sec:output}
 
-\print 与 \printf 语句可以用来产生输出. \print 用于产生简单的输出; \printf 
+\print 与 \printf 语句可以用来产生输出. \print 用于产生简单的输出; \printf
 用于产生格式化的输出. 来自 \print 与 \printf 的输出可以被重定向到文件, 管
 道与终端. 这两个语句可以混合使用, 输出按照它们产生的顺序出现.
 
@@ -1836,7 +1836,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
         \item \print \par
             将 \verb'$0' 打印到标准输出
         \item \print\ \expr\verb',' \expr\verb',' \ldots \par
-            打印各个 \expr, \expr 之间由 \verb'OFS' 分开, 由 \verb'ORS' 
+            打印各个 \expr, \expr 之间由 \verb'OFS' 分开, 由 \verb'ORS'
             终止
         \item \print\ \expr\verb','\expr\verb','\ldots\ \verb'>'
             \textit{filename}
@@ -1862,16 +1862,16 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
             \printf 类似于 \print, 但是第 1 个参数规定了输出的格式
         \item \verb'close('\textit{filename}\verb')', \verb'close('
             \textit{command}\verb')' \par
-            断开 \print 与 \textit{filename} (或 \textit{command}) 之间 
+            断开 \print 与 \textit{filename} (或 \textit{command}) 之间
             的连接
         \item \verb'system('\textit{command}\verb')' \par
-            执行 \textit{command}; 函数的返回值是 \textit{command} 的退 
+            执行 \textit{command}; 函数的返回值是 \textit{command} 的退
             出状态
 
-        \printf 的参数列表不需要被包围在一对括号中. 但是如果 \print 或 
+        \printf 的参数列表不需要被包围在一对括号中. 但是如果 \print 或
         \printf 的参数列表中, 有一个表达式含有关系运算符, 那么或者表达式,
-        或者 
-        参数列表, 必须用一对括号包围. 在非 Unix 系统上可能不提供管道与 
+        或者
+        参数列表, 必须用一对括号包围. 在非 Unix 系统上可能不提供管道与
         \verb'system'.
     \end{enumerate}
 \end{summary}
@@ -1884,7 +1884,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
     \expr$_n$\verb')'
 \end{pattern}
 两种形式都会把表达式的字符串值打印出现, 各个表达式的字符串值之间用输出
-字段分隔符分开, 最后跟着输出记录分隔符. 语句 
+字段分隔符分开, 最后跟着输出记录分隔符. 语句
 \begin{myverb}
     print
 \end{myverb}
@@ -1896,7 +1896,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \begin{myverb}
     print ""
 \end{myverb}
-\print 的第 2 种形式将参数列表包围在一对括号当中, 正如 
+\print 的第 2 种形式将参数列表包围在一对括号当中, 正如
 \begin{myverb}
     print($1 ":", $2)
 \end{myverb}
@@ -1909,7 +1909,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 
 输出字段分割符与输出记录分隔符存储在内建变量 \verb'OFS' 与 \verb'ORS' 中.
 初始情况下, \verb'OFS' 与 \verb'ORS' 分别被设置成一个空格符与一个换行符,
-但它们的值可以在任何时候改变. 举例来说, 下面这个程序打印每一行的第 1 与第 
+但它们的值可以在任何时候改变. 举例来说, 下面这个程序打印每一行的第 1 与第
 2 个字段, 字段之间用分号分开, 在每一行的第 2 个字段之后输出两个换行符.
 \begin{myverb}
     BEGIN   { OFS = ":"; ORS = "\n\n" }
@@ -1919,18 +1919,18 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \begin{myverb}
     { print $1 $2 }
 \end{myverb}
-打印第 1 个与第 2 个字段, 两个字段之间没有输出字段分隔符插入, 这是因为 
+打印第 1 个与第 2 个字段, 两个字段之间没有输出字段分隔符插入, 这是因为
 \verb'$1 $2' 表示两个字符串的拼接.
 
 \subsection{\texttt{printf} 语句}
 \label{subsec:the_printf_statement}
 
-\printf 用于产生格式化的输出. 它与 C 语言中的 \printf 函数很像, 但是 awk 
+\printf 用于产生格式化的输出. 它与 C 语言中的 \printf 函数很像, 但是 awk
 的 \printf 不支持格式说明符 \verb'*'. 与 \print 一样, 它也有带括号与不带
 括号的两种形式:
 \begin{pattern}
     \printf\ \fmt\verb','\expr$_1$\verb','\expr$_2$\verb','...\verb','
-    \expr$_n$ \par 
+    \expr$_n$ \par
     \printf\verb'('\fmt\verb','\expr$_1$\verb','\expr$_2$\verb','
     ...\verb',' \expr$_n$\verb')'
 \end{pattern}
@@ -2004,7 +2004,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
         \end{tabular}
 \end{center}
     \end{figure}
-表 \ref{tbl:examples_of_printf_specifications} 包含有几个例子, 这些例子 
+表 \ref{tbl:examples_of_printf_specifications} 包含有几个例子, 这些例子
 说明了格式说明符, 数据及其对应的输出. 由 \printf 产生的输出不会在行末自动
 插入一个换行符, 除非你显式放置了一个换行符.
 
@@ -2019,13 +2019,13 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
     $3 > 100    { print $1, $3 > "bigpop" }
     $3 <= 100   { print $1, $3 > "smallpop" }
 \end{myverb}
-注意, 文件名必须用双引号括起来; 如果没有双引号的话, \verb'bigpop' 与 
+注意, 文件名必须用双引号括起来; 如果没有双引号的话, \verb'bigpop' 与
 \verb'smallpop' 将被当作未初化的变量.
 \marginpar{58} 文件名也可以是表达式或变量:
 \begin{myverb}
     { print($1, $3) > ($3 > 100 ? "bigpop" : "smallpop") }
 \end{myverb}
-上面这个程序做的是同样的工作, 程序 
+上面这个程序做的是同样的工作, 程序
 \begin{myverb}
     { print > $1 }
 \end{myverb}
@@ -2033,7 +2033,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 
 在 \print 与 \printf 语句中, 如果参数列表中的表达式包含有关系运算符, 那么,
 表达式 (或者是参数列表) 需要用括号括起来. 这样做是为了避免由重定向运算符
-\verb'>' 带来的歧义. 在程序 
+\verb'>' 带来的歧义. 在程序
 \begin{myverb}
     { print $1, $2 > $3 }
 \end{myverb}
@@ -2052,7 +2052,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \subsection{输出到管道}
 \label{subsec:output_into_pipe}
 
-在支持管道的系统中, 也可以把输出重定向到管道, 而不仅仅是文件. 语句 
+在支持管道的系统中, 也可以把输出重定向到管道, 而不仅仅是文件. 语句
 \begin{pattern}
     \verb'print | '\textit{command}
 \end{pattern}
@@ -2101,9 +2101,9 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \subsection{关闭文件与管道}
 \label{subsec:closing_files_and_pipes}
 
-语句 \verb'close('\expr\verb')' 关闭一个文件或管道, 文件或管道由 
+语句 \verb'close('\expr\verb')' 关闭一个文件或管道, 文件或管道由
 \expr 指定; \expr 的字符串值必须与最初用于创建文件或管道的字符串值相同.
-于是 
+于是
 \begin{myverb}
     close("sort -t'\t' +1rn")
 \end{myverb}
@@ -2115,7 +2115,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \section{输入}
 \label{sec:input}
 
-为 awk 提供输入数据有若干种方式. 最常见的是把输入数据放在一个文件中, 例如 
+为 awk 提供输入数据有若干种方式. 最常见的是把输入数据放在一个文件中, 例如
 文件 \verb'data', 然后再键入
 \begin{pattern}
     \indent\verb"awk '"\textit{program}\verb"' data"
@@ -2159,7 +2159,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \begin{myverb}
     FS = "|"
 \end{myverb}
-把 \verb'|' 变成字段分隔符, 但是有一些间接的方法需要注意, 就像 
+把 \verb'|' 变成字段分隔符, 但是有一些间接的方法需要注意, 就像
 \begin{myverb}
     FS = "[ ]"
 \end{myverb}
@@ -2170,7 +2170,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 
 默认情况下, 记录之间由换行符分隔, 所以术语 ``行'' 与 ``记录'' 在通常情况
 下是等价的. 默认的记录分隔符可以通过向内建变量 \verb'RS' 赋予新值来改变,
-但是必须按照某种受限的方式来进行. 如果 \verb'RS' 被设置成空值, 正如 
+但是必须按照某种受限的方式来进行. 如果 \verb'RS' 被设置成空值, 正如
 \begin{myverb}
     BEGIN { RS = "" }
 \end{myverb}
@@ -2184,14 +2184,14 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
     BEGIN { RS = ""; FS = "\n" }
 \end{myverb}
 把记录分隔符设置成一个或多个空白行, 把字段分隔符设置成单个的换行符; 每一
-行都是一个单独的字段. 记录的长度是有限制的, 通常是 3000 个字符. 
+行都是一个单独的字段. 记录的长度是有限制的, 通常是 3000 个字符.
 关于如何处理多行记录, 在第 \ref{chap:data_processing} 章包含更多的讨论.
 
 \subsection{\texttt{getline} 函数}
 \label{subsec:the_getline_function}
 
-函数 \verb'getline' 可以从当前输入行, 或文件, 或管道, 读取输入. 
-\verb'getline' 抓取下一个记录, 按照通常的方式把记录分割成一个个的字段. 
+函数 \verb'getline' 可以从当前输入行, 或文件, 或管道, 读取输入.
+\verb'getline' 抓取下一个记录, 按照通常的方式把记录分割成一个个的字段.
 它会设置 \verb'NF', \verb'NR', 和 \verb'FNR'; 如果存在一个记录, 返回
 \verb'1',
 若遇到文件末尾, 返回 \verb'0', 发生错误时返回 \verb'-1'
@@ -2200,14 +2200,14 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 表达式 \verb'getline x' 读取下一条记录到变量 \verb'x' 中, 并递增 \verb'NR'
 与 \verb'FNR', 不会对记录进行分割, 所以不会设置 \verb'NF'.
 
-表达式 
+表达式
 \begin{myverb}
     getline <"file"
 \end{myverb}
 从文件 \verb'file' 读取输入. 它不会对 \verb'NR' 与 \verb'FNR' 产生影响,
 但是会执行字段分割, 并且设置 \verb'NF'.
 
-表达式 
+表达式
 \begin{myverb}
     getline x <"file"
 \end{myverb}
@@ -2259,7 +2259,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \end{myverb}
 
 \marginpar{62}
-也可以把其他命令的输出直接输送给 \verb'getline'. 例如, 语句 
+也可以把其他命令的输出直接输送给 \verb'getline'. 例如, 语句
 \begin{myverb}
     while ("who" | getline)
         n++
@@ -2268,7 +2268,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \verb'who' 命令的输出是所有已登录用户的用户名, \verb'while' 循环的每一次
 迭代都从这个用户名列表里读取一行,
 并递增变量 \verb'n', 当循环结束后,
-\verb'n' 的值就是已登录用户的人数. 类似的, 表达式 
+\verb'n' 的值就是已登录用户的人数. 类似的, 表达式
 \begin{myverb}
     "date" | getline d
 \end{myverb}
@@ -2300,7 +2300,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
     \indent\verb"awk -F"\textit{sep}\verb" -f "\textit{progfile}
         \verb" f1 f2 ..." \par
 \end{pattern}
-在上面的命令行中, \verb'f1, f2' 等变量是命令行参数, 通常代表文件名. 
+在上面的命令行中, \verb'f1, f2' 等变量是命令行参数, 通常代表文件名.
 如果一个文件名具有形式 \textit{var}\verb'='\textit{text}, 那这就表示赋
 值语句, 把 \textit{text} 赋值给 \textit{var}, 当这个参数被当作文件来访问时,
 执行赋值动作. 这种类型的赋值语句允许程序在读文件之前或之后改变变量的值.
@@ -2316,7 +2316,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \verb'ARGC' 的值是 \verb'4', \verb'ARGV[0]' 含有 \verb'awk', \verb'ARGV[1]'
 含有 \verb'a', \verb'ARGV[2]' 含有 \verb'v=1', \verb'ARGV[3]' 含有
 \verb'b'. \verb'ARGC' 之所以会比参数的个数多1, 是因为命令的名字 \verb'awk'
-也被当作参数之一, 存放在索引为 0 的位置, 就像 C 程序那样. 然而, 如果 awk 
+也被当作参数之一, 存放在索引为 0 的位置, 就像 C 程序那样. 然而, 如果 awk
 程序在命令行中出现, 那它就不会被当作参数, 对 \verb'-f '\textit{filename}
 或任意的 \verb'-F' 选项同样如此. 例如, 对于命令行
 \begin{myverb}
@@ -2334,7 +2334,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
         printf "\n"
     }
 \end{myverb}
-请注意在 \verb'BEGIN' 动作里所发生的一切: 因为没有其他的 \patact 语句, 
+请注意在 \verb'BEGIN' 动作里所发生的一切: 因为没有其他的 \patact 语句,
 所以参数不会被当作文件名, 也没有输入被读取.
 
 另一个使用命令行参数的例子是 \verb'seq', 它可以产生一个整数序列:
@@ -2355,16 +2355,16 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
                 print i
     }
 \end{myverb}
-命令 
+命令
 \marginpar{64}
 \begin{myverb}
-    awk -f seq 10 
-    awk -f seq 1 10 
+    awk -f seq 10
+    awk -f seq 1 10
     awk -f seq 1 10 1
 \end{myverb}
 都是生成 1 到 10 这十个整数.
 
-\verb'ARGV' 里面的参数可以修改或添加, \verb'ARGC' 可能会随之改变. 每当有一 
+\verb'ARGV' 里面的参数可以修改或添加, \verb'ARGC' 可能会随之改变. 每当有一
 个输入文件结束, awk 把 \verb'ARGV' 的下一个非空元素 (直到 \verb'ARGC - 1'
 的当前值) 看作是下一个输入文件名. 于是, 把 \verb'ARGV' 的一个元素设置为
 空, 意味着 awk 不会把它看作是输入文件. 名字 ``\verb"-"'' 可以当作标准输入
@@ -2373,13 +2373,13 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 \section{与其他程序的交互}
 \label{sec:interaction_with_other_programs}
 
-这一节描述几种 awk 程序与其他命令合作的方式. 主要针对 Unix 系统, 在非 
+这一节描述几种 awk 程序与其他命令合作的方式. 主要针对 Unix 系统, 在非
 Unix 系统上, 这里的例子可能无法工作或表现出不同的行为.
 
 \subsection{\texttt{system} 函数}
 \label{subsec:the_system_function}
 
-内建函数 \verb'system('\textit{expression}\verb')' 用于执行命令, 命令由 
+内建函数 \verb'system('\textit{expression}\verb')' 用于执行命令, 命令由
 \textit{expression} 给出, \verb'system' 的返回值就是命令的退出状态.
 
 例如, 我们可以重新实现 \ref{sec:input} 节提到的文件包含程序, 就像这样
@@ -2387,7 +2387,7 @@ Unix 系统上, 这里的例子可能无法工作或表现出不同的行为.
     $1 == "#include" { gsub(/"/, "", $2); system("cat " $2); next }
                      { print }
 \end{myverb}
-如果第一个字段是 \verb'#include', 那么双引号就会被移除, 然后 Unix 命令 
+如果第一个字段是 \verb'#include', 那么双引号就会被移除, 然后 Unix 命令
 \verb'cat' 打印以第 2 个字段命名的文件. 其他输入行被原样复制.
 
 \subsection{用 AWK 制作 Shell 命令}
@@ -2420,7 +2420,7 @@ Unix 命令:
 \end{pattern}
 
 现在我们考虑实现一个更加通用的 \verb'field', 程序可以从每个输入行中
-打印任意组合的字段, 换句话说, 命令 
+打印任意组合的字段, 换句话说, 命令
 \begin{pattern}
     \indent\verb'field '\textit{n}$_1$\ \textit{n}$_2$\ ...\ \textit{file}$_1$\ \textit{file}
         $_2$\ ...
@@ -2428,7 +2428,7 @@ Unix 命令:
 按照特定的顺序打印特定的字段. 但是我们如何获取 \textit{n}$_i$ 的值, 又如何区分
 \textit{n}$_i$ 与文件名参数?
 
-对于采用 Shell 编程的人来说, 解决上面提到的两个问题有多种方式, 如果使用 
+对于采用 Shell 编程的人来说, 解决上面提到的两个问题有多种方式, 如果使用
 awk 的话, 最简单的方式是扫描内建数组 \verb'ARGV', 获取 \textit{n}$_i$
 的值之后, 把数组中对应的位置清零, 这样它们就不会被当成文件名:
 \marginpar{66}
@@ -2470,7 +2470,7 @@ awk 的话, 最简单的方式是扫描内建数组 \verb'ARGV', 获取 \textit{
 \label{subsec:bibliographic_notes}
 
 \textit{The C Programming Language} (Brian Kernighan 与 Dennis Ritchie 著,
-Prentice-Hall 1978 年出版) 对 C 程序设计语言进行了完整地描述. 关于如何 
-使用 Unix 系统有大量的资料可供参考; \textit{The Unix Programming 
+Prentice-Hall 1978 年出版) 对 C 程序设计语言进行了完整地描述. 关于如何
+使用 Unix 系统有大量的资料可供参考; \textit{The Unix Programming
 Environment} (Brian Kernighan 与 Rob Pike 著, Prentice-Hall 1984 年出版)
 包含一个扩展讨论, 讨论的是如何创建包含 awk 的 shell 程序.
