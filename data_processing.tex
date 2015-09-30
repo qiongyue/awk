@@ -32,7 +32,7 @@ Awk 的一个最常用的功能是把数据从一种形式转换成另一种形�
 下面这个程序执行的工作更加复杂, 但却是比较典型的数据归约任务. 每一个输入行
 都含有若干个字段, 每一个字段都包含数字, 程序的任务是计算每一列的和, 而不管
 该行有多少列.
-\begin{awkcode}
+\begin{myverb}
      # sum1 - print column sums
      #   input:  rows of numbers
      #   output: sum of each column
@@ -51,7 +51,7 @@ Awk 的一个最常用的功能是把数据从一种形式转换成另一种形�
                    printf("\n")
            }
          }
-\end{awkcode}
+\end{myverb}
 \marginpar{68}
 变量的自动初始化在这里显得非常方便, 因为 \verb'maxfld' (到目前为止, 看到的
 字段数最大值) 自动从 0 开始, 随着程序的运行, 所有的项都被放入数组 \verb'sum'
@@ -63,7 +63,7 @@ Awk 的一个最常用的功能是把数据从一种形式转换成另一种形�
     but it doesn't check that the entries are all numbers, nor that each 
 row has the same number of entries.}. 下面的程序做的是同样的事情, 但是 
 它会检查每行的字段数是否与第一行的相同:
-\begin{awkcode}
+\begin{myverb}
      # sum2 - print column sums
      #     check that each line has the same number of fields
      #        as line one
@@ -77,7 +77,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
      END   { for (i = 1; i <= nfld; i++)
                  printf("%g%s", sum[i], i < nfld ? "\t" : "\n")
            }
-\end{awkcode}
+\end{myverb}
 我们还修正了位于 \END 的输出代码, 这段代码显示了如何利用条件表达式, 使得
 在列与列之间插入一个制表符, 在最后一列之后插入一个换行符.
 
@@ -87,7 +87,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
 \marginpar{69}%
 对程序进行修改. 如果程序可以相信它的输入, 那么只需要查看第 1 行就够了,
 我们仍然需要 \verb'nfld', 因为在 \END 中, \verb'NF' 的 值是零.
-\begin{awkcode}
+\begin{myverb}
      # sum3 - print sums of numeric columns
      #     input:  rows of integers and strings
      #     output: sums of numeric columns
@@ -113,7 +113,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
            }
      
      function isnum(n) { return n ~ /^[+-]?[0-9]+$/ }
-\end{awkcode}
+\end{myverb}
 函数 \verb'isnum' 把数值定义成一个或多个数字, 可能有前导符号. 关于数值更加
 一般的定义可以在 \ref{sec:patterns} 节的正则表达式那里找到.
 
@@ -140,7 +140,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
 必须对数据遍历两遍. 如果只有一列是数值, 而且也没有太多的数据, 最简单的办法
 是在第一次遍历时, 把数值存储在一个数组中, 每二次遍历时计算百分比并把它打印
 出来:
-\begin{awkcode}
+\begin{myverb}
      # percent
      #   input:  a column of nonnegative numbers
      #   output: each number and its percentage of the total
@@ -151,14 +151,14 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
                for (i = 1; i <= NR; i++)
                    printf("%10.2f %5.1f\n", x[i], 100*x[i]/sum)
          }
-\end{awkcode}
+\end{myverb}
 \marginpar{70}
 
 虽然包含了稍微复杂一点的转换关系,
 但是它可以用于许多事情, 例如调整学生的成绩, 使得成绩分布符
 合某种曲线. 一旦成绩计算完毕 (0 到 100 之间的数), 显示成一个直方图可能会比
 较有趣:
-\begin{awkcode}
+\begin{myverb}
     # histogram
     #   input:  numbers between 0 and 100
     #   output: histogram of deciles
@@ -176,12 +176,12 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
             t = t s
         return t
     }
-\end{awkcode}
+\end{myverb}
 需要注意的是后缀递增运算符 \verb'--' 如何控制 \verb'while' 循环.
 
 我们可以用随机生成的成绩来测试 \verb'histogram'. 管道线上的第一个程序随机
 生成 200 个 0 到 100 的整数, 并把这些整数输送给 \verb'histogram'
-\begin{awkcode}
+\begin{myverb}
     awk '
     # generate random integers
     BEGIN { for (i = 1; i <= 200; i++)
@@ -189,10 +189,10 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
           }
     ' |
     awk -f histogram
-\end{awkcode}
+\end{myverb}
 它的输出是\footnote{这是在我系统上的运行结果, 因为成绩是随机生成的, 所以 
 与原文不太一样. --- 译者注}
-\begin{shell}
+\begin{myverb}
       0 -  9:  20 ********************
      10 - 19:  18 ******************
      20 - 29:  20 ********************
@@ -204,7 +204,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
      80 - 89:  20 ********************
      90 - 99:  22 **********************
     100:        2 **
-\end{shell}
+\end{myverb}
 
 \marginpar{71}
 \begin{exercise}
@@ -222,12 +222,12 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
 设想我们有一张包含了许多数的表, 每个数都有逗号与小数点, 就像
 \verb'12,345.67', 因为第一个逗号会终止 awk 对数的解析, 所以它们不能直接
 相加, 必须首先把逗号移除:
-\begin{awkcode}
+\begin{myverb}
     # sumcomma - add up numbers containing commas
     
         { gsub(/,/, ""); sum += $0 }
     END { print sum }
-\end{awkcode}
+\end{myverb}
 \verb'gsub(/,/, "")' 把每一个逗号都替换成空字符串, 也就是删除逗号.
 
 这个程序不检查逗号是否处于正确的位置,
@@ -241,7 +241,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
 小数点, 而且每一个逗号的前面至少有一个数字. 算法使用递归来处理负数: 如果 
 输入参数是负数, 那么函数 \verb'addcomma' 使用正数来调用它自身, 返回时再加
 上负号.
-\begin{awkcode}
+\begin{myverb}
     # addcomma - put commas in numbers
     #   input:  a number per line
     #   output: the input number followed by
@@ -257,13 +257,13 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
             sub(/[0-9][0-9][0-9][,.]/, ",&", num)
         return num
     }
-\end{awkcode}
+\end{myverb}
 \marginpar{72}
 请注意 \verb'&' 的用法, 通过文本替换, \verb'sub' 在每三个数字的前面插入一个
 逗号.
 
 这是某些测试数据的输出:
-\begin{shell}
+\begin{myverb}
     0                            0.00
     -1                          -1.00
     -12.34                     -12.34
@@ -271,7 +271,7 @@ row has the same number of entries.}. 下面的程序做的是同样的事情, �
     -1234567.89         -1,234,567.89
     -123.                     -123.00
     -123456               -123,456.00
-\end{shell}
+\end{myverb}
 
 \begin{exercise}
     修复 \verb'sumcomma' (带逗号的数字求和程序), 使得它可以检查数字中的逗号
@@ -289,27 +289,27 @@ numbers in fixed columns, rather than with field separators.}. 如果序号太�
 它可以将任意组合的列挑选出来. 举例来说, 假设每行的前6个字符包含一个日期, 
 日期的形式是 \verb'mmddyy', 如果我们想让它们按照日期排序, 最简单的办法是
 先把日期转换成 \verb'yymmdd' 的形式:
-\begin{awkcode}
+\begin{myverb}
     # date convert - convert mmddyy into yymmdd in $1
     
     { $1 = substr($1,5,2) substr($1,1,2) substr($1,3,2); print }
-\end{awkcode}
+\end{myverb}
 如果输入是按照月份排序的, 就像这样
-\begin{shell}
+\begin{myverb}
     013042 mary's birthday
     032772 mark's birthday
     052470 anniversary
     061209 mother's birthday
     110175 elizabeth's birthday
-\end{shell}
+\end{myverb}
 那么程序的输出是
-\begin{shell}
+\begin{myverb}
     420130 mary's birthday
     720327 mark's birthday
     700524 anniversary
     090612 mother's birthday
     751101 elizabeth's birthday
-\end{shell}
+\end{myverb}
 \marginpar{73}
 现在数据已经准备好, 可以按照年, 月, 日来排序了.
 
@@ -333,7 +333,7 @@ Awk 经常用于从其他程序的输出中提取信息, 有时候这些输出�
 任务, Unix 提供了命令 \verb'nm', \verb'nm' 从一个目标文件集合中提取信息,
 并打印一张精心格式化过的列表, 这张表包含了名字, 定义, 以及名字在哪里被使用
 到, \verb'nm' 的典型输出是
-\begin{shell}
+\begin{myverb}
     file.o:
     00000c80 T _addroot
     00000b30 T _checkdev
@@ -344,7 +344,7 @@ Awk 经常用于从其他程序的输出中提取信息, 有时候这些输出�
     funmount.o:
     00000000 T _funmount
              U cerror
-\end{shell}
+\end{myverb}
 只有一个字段的行 (比如 \verb'file.o') 是文件名, 有两个字段的行 (比如 
 \verb'U _close') 表示的是名字被使用到的地方, 有三个字段的行表示的是名字
 被定义的地方. \verb'T' 表示这个定义是一个文本符号 (函数), \verb'U' 表示 
@@ -357,15 +357,15 @@ Awk 经常用于从其他程序的输出中提取信息, 有时候这些输出�
 \marginpar{74}
 一个仅仅 3 行的 awk 程序就可以把文件名加到每个符号的前面, 经过它的处理,
 后续的程序仅通过一行就可以获取到有用的信息:
-\begin{awkcode}
+\begin{myverb}
     # nm.format - add filename to each nm output line
     
     NF == 1 { file = $1 }
     NF == 2 { print file, $1, $2 }
     NF == 3 { print file, $2, $3 }
-\end{awkcode}
+\end{myverb}
 把上面 \verb'nm' 的输出作为 \filename{nm.format} 的输入, 结果是
-\begin{awkcode}
+\begin{myverb}
     file.o: T _addroot
     file.o: T _checkdev
     file.o: T _checkdupl
@@ -374,7 +374,7 @@ Awk 经常用于从其他程序的输出中提取信息, 有时候这些输出�
     file.o: U _close
     funmount.o: T _funmount
     funmount.o: U cerror
-\end{awkcode}
+\end{myverb}
 现在, 如果有其他程序想要对输出作进一步的处理就容易多了.
 
 上面的输出没有包括行号信息, 也没有指出某个名字在文件中被用到了多少次, 
@@ -391,7 +391,7 @@ Awk 经常用于从其他程序的输出中提取信息, 有时候这些输出�
 45 个字符宽的区域, 紧跟在它后面的是 3 个空格, 再后面是金额, 第 5 行是金额
 的大写形式, 其他行都是空白. 支票看起来就像这样\footnote{TODO}:
 %TODO 应该为支票的边缘加上边框
-\begin{shell}
+\begin{myverb}
 
                                              1026
                                              Aug 31, 2015
@@ -400,10 +400,10 @@ the sum of one hundred twenty three dollars and 45 cents exactly
 
 
 
-\end{shell}
+\end{myverb}
 这是打印支票的 awk 程序:
 \marginpar{75}
-\begin{awkcode}
+\begin{myverb}
     # prchecks - print formatted checks
     #   input:  number \t amount \t payee
     #   output: eight lines of text for preprinted check forms
@@ -456,7 +456,7 @@ the sum of one hundred twenty three dollars and 45 cents exactly
         split("ten twenty thirty forty fifty sixty " \
               "seventy eighty ninety", tens, " ")
     }
-\end{awkcode}
+\end{myverb}
 
 程序中包含了几个比较有趣的部分. 首先, 要注意到我们在 \BEGIN 中是如何利用
 \marginpar{76}
@@ -465,17 +465,17 @@ the sum of one hundred twenty three dollars and 45 cents exactly
 字符串拼接来创建 \verb'split' 的参数 --- 这是很常见的编程技巧.
 
 日期通过
-\begin{awkcode}
+\begin{myverb}
     "data" | getline data   # get today's date
-\end{awkcode}
+\end{myverb}
 从系统获取, 该行执行 \verb'date', 再把它的输出输送给 \verb'getline'. 为了把
-\begin{shell}
+\begin{myverb}
     Wed Jun 17 13:39:36 EDT 1987
-\end{shell}
+\end{myverb}
 转换成 
-\begin{shell}
+\begin{myverb}
     Jun 17, 1987
-\end{shell}
+\end{myverb}
 我们需要自己做一些处理工作.
 (在不支持管道的非Unix平台上, 该程序需要做些修改才能正确运行)
 
@@ -514,7 +514,7 @@ Awk 的另一个常用功能是数据验证: 确保数据是合法的, 或至少
 这样一种情况: 在本应是数值的字段上出现了非数值的量 (或反之) ? 下面这个程序 
 与列求和程序非常相似, 但没有求和操作:
 \marginpar{77}
-\begin{awkcode}
+\begin{myverb}
     # colcheck - check consistency of columns
     #   input:  rows of numbers and strings
     #   output: lines whose format differs from first line
@@ -534,7 +534,7 @@ Awk 的另一个常用功能是数据验证: 确保数据是合法的, 或至少
     }
     
     function isnum(n) { return n ~ /^[+-]?[0-9]+$/ }
-\end{awkcode}
+\end{myverb}
 同样, 我们把数值看成是仅由数字构成的序列, 可能有前导符号, 如果想让这个判断
 更加完整, 请参考 \ref{sec:patterns} 节关于正则表达式的讨论.
 
@@ -547,13 +547,13 @@ Awk 的另一个常用功能是数据验证: 确保数据是合法的, 或至少
 这些特殊行叫作 ``文本格式化'' 命令, 有了这些命令的帮助, 在排版书籍的时候,
 程序可以以一种容易识别的字体显示出来. 因为程序之间不能互相嵌套, 所以这些 
 文本格式化命令必须按照交替序列, 轮流出现:
-\begin{shell}
+\begin{myverb}
     .P1 .P2 .P1 .P2 ... .P1 .P2
-\end{shell}
+\end{myverb}
 如果其中一个被漏掉了, 那么排版软件的输出将会是完全混乱的. 为了确保书籍被
 正确得排版, 我们写了这个小程序, 它可以用于检查分隔符是否按照正确的顺序出现,
 程序虽小, 但却是检查程序的典型代表:
-\begin{awkcode}
+\begin{myverb}
     # p12check - check input for alternating .P1/.P2 delimiters
     
     /^\.P1/ { if (p != 0)
@@ -565,7 +565,7 @@ Awk 的另一个常用功能是数据验证: 确保数据是合法的, 或至少
               p = 0
             }
     END     { if (p != 0) print "missing .P2 at end" }
-\end{awkcode}
+\end{myverb}
 如果分隔符按照正确的顺序出现, 那么变量 \verb'p' 就会按照 \texttt{0 1 0 1 0
 ... 1 0} 的规律变化, 否则, 一条错误消息被打印出来, 消息含有发生错误时,
 当前输入行 所在的行号.
@@ -580,7 +580,7 @@ Awk 的另一个常用功能是数据验证: 确保数据是合法的, 或至少
 
 Unix 系统中的密码文件含有授权用户的用户名及其相关信息, 密码文件的每一行都
 由 7 个字段组成:
-\begin{awkcode}
+\begin{myverb}
     root:qyxRi2uhuVjrg:0:2::/:
     bwk:1L./v6iblzzNE:9:1:Brian Kernighan:/usr/bwk:
     ava:otxs1oTVoyvMQ:15:1:Al Aho:/usr/ava:
@@ -588,14 +588,14 @@ Unix 系统中的密码文件含有授权用户的用户名及其相关信息, �
     pjw:xNqY//GDc8FFg:170:2:Peter Weinberger:/usr/pjw:
     mark:j0z1fuQmqIvdE:374:1:Mark Kernighan:/usr/bwk/mark:
     ...
-\end{awkcode}
+\end{myverb}
 第1个字段是用户的登录名, 只能由字母或数字组成. 第 2 个字段是加密后的登录
 密码, 如果密码是空的, 那么任何人都可以利用这个用户名来登录系统, 如果这个
 字段非空, 那么只有知道密码的用户才能成功登录. 第 3 与第 4 个字段是数字,
 第 6 个字段以 \verb'/' 开始. 下面这个程序打印的行不符合前面描述的结构,
 顺带打印它们的行号, 及一条恰当的诊断消息, 每个晚上都让这个程序运行一遍可
 以让系统更加健康, 远离攻击.
-\begin{awkcode}
+\begin{myverb}
     # passwd - check password file
     
     BEGIN {
@@ -612,7 +612,7 @@ Unix 系统中的密码文件含有授权用户的用户名及其相关信息, �
         printf("line %d, nonnumeric group id: %s\n", NR, $0) }
     $6 !~ /^\// {
         printf("line %d, invalid login directory: %s\n", NR, $0) }
-\end{awkcode}
+\end{myverb}
 
 这是增量开发程序的好例子: 每当有人认为需要添加新的检查条件时, 只需要往
 程序中添加即可, 其他部分保持不动, 于是程序会越来越完善.
@@ -625,13 +625,13 @@ Unix 系统中的密码文件含有授权用户的用户名及其相关信息, �
 自动转化成检查程序. 下面这个集合含有几个错误条件及其对应的提示信息, 
 这些错误条件取自上一个程序. 如果某个输入行满足错误条件, 对应的提示信息
 就会被打印出来.
-\begin{shell}
+\begin{myverb}
     NF != 7                 does not have 7 fields
     $1 ~ /[^A-Za-z0-9]/     nonalphanumeric user id
     $2 == ""                no password
-\end{shell}
+\end{myverb}
 下面这个程序把\ \mbox{条件}\mbox{-}消息\ 对转化成检查程序:
-\begin{awkcode}
+\begin{myverb}
     # checkgen - generate data-checking program
     #     input:  expressions of the form: pattern tabs message
     #     output: program to print message when pattern matches
@@ -640,16 +640,16 @@ Unix 系统中的密码文件含有授权用户的用户名及其相关信息, �
     { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0) }\n",
           $1, $2)
     }
-\end{awkcode}
+\end{myverb}
 程序的输出是一系列的条件与打印消息的动作:
-\begin{awkcode}
+\begin{myverb}
     NF != 7 {
         printf("line %d, does not have 7 fields: %s\n",NR,$0) }
     $1 ~ /[^A-Za-z0-9]/ {
         printf("line %d, nonalphanumeric user id: %s\n",NR,$0) }
     $2 == "" {
         printf("line %d, no password: %s\n",NR,$0) }
-\end{awkcode}
+\end{myverb}
 检查程序运行时, 如果当前输入行使得条件为真, 那么程序就会打印出一条消息, 
 消息含有当前输入行的行号, 错误消息, 及当前输入行的内容.
 需要注意的是, 在程序
@@ -674,7 +674,7 @@ Awk 可以用来检验程序, 也可以用来组织程序测试. 本小节包含
 Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有可能不小心用到了
 这些名字, 例如, 老程序用 \verb'sub' 命名一个变量, 而在新版 awk 中,
 \verb'sub' 是一个内建函数. 下面的程序可以用来检测这种错误:
-\begin{awkcode}
+\begin{myverb}
     # compat - check if awk program uses new built-in names
     
     BEGIN { asplit("close system atan2 sin cos rand srand " \
@@ -711,7 +711,7 @@ Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有�
         sub(/^[ \t]*/, "")
         printf("file %s, line %d: %s\n\t%s\n", FILENAME, FNR, s, $0)
     }
-\end{awkcode}
+\end{myverb}
 
 程序中真正复杂的地方在于替换语句: 在一个输入行被检查之前, 语句试图从输入
 行中移除被双引号包围的字符串, 正则表达式, 以及注释. 替换语句并不是非常
@@ -727,7 +727,7 @@ Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有�
 符串内的单词, 然后就可以测试新来的单词是否在数组内.
 
 如果把文件 \filename{compat} 作为输入, 输出是:
-\begin{shell}
+\begin{myverb}
     file tmp.awk, line 12: gsub is now a built-in function
         /\//  { gsub(/\/([^\/]|\\\/)+\//, "", line) } # reg exprs,
     file tmp.awk, line 13: sub is now a built-in function
@@ -742,7 +742,7 @@ Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有�
         sub(/^[ \t]*/, "")
     file tmp.awk, line 35: FNR is now a built-in variable
         printf("file %s, line %d: %s\n\t%s\n", FILENAME, FNR, s, $0)
-\end{shell}
+\end{myverb}
 
 \begin{exercise}
     重写 \verb'compat', 不用 \verb'asplit', 而是用正则表达式来识别关键词,
@@ -766,19 +766,19 @@ Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有�
 
 程序 \verb'bundle' 非常简短, 简短到你可以直接在命令行上输入, 它所做的工作
 仅仅是为每一行加上文件名前缀, 文件名可以通过内建变量 \verb'FILENAME' 得到.
-\begin{awkcode}
+\begin{myverb}
     # bundle - combine multiple files into one
     { print FILENAME, $0 }
-\end{awkcode}
+\end{myverb}
 
 对应的 \verb'unbundle' 程序只是稍微需要花点心思:
 \marginpar{82}
-\begin{awkcode}
+\begin{myverb}
     # unbundle - unpack a bundle into separate files
     
     $1 != prev { close(prev); prev = $1 }
                { print substr($0, index($0, " ") + 1) >$1 }
-\end{awkcode}
+\end{myverb}
 如果遇到一个新文件, 则关闭之前打开的文件, 如果文件不是很多 (小于同时处于打开
 状态的文件数的最大值), 那么这一行可以省略.
 
@@ -798,25 +798,25 @@ Awk 的新版可能包含更多的内建变量与内建函数, 而老程序有�
 
 到目前为止遇到的记录都是由单行组成的, 然而, 还有大量的数据, 其每一条记录
 都由多行组成, 比如地址薄
-\begin{shell}
+\begin{myverb}
     Adam Smith
     1234 Wall St., Apt. 5C
     New York, NY 10021
     212 555-4321
-\end{shell}
+\end{myverb}
 或参考文献
-\begin{shell}
+\begin{myverb}
     Donald E. Knuth
     The Art of Computer Programming
     Volume 2: Seminumerical Algorithms, Second Edition
     Addison-Wesley, Reading, Mass.
     1981
-\end{shell}
+\end{myverb}
 或个人笔记
-\begin{shell}
+\begin{myverb}
     Chateau Lafite Rothschild 1947
     12 bottles @ 12.95
-\end{shell}
+\end{myverb}
 
 如果大小合适, 结构也很规范, 那么创建并维护这些信息相对来说还是比较容易的,
 在效果上, 每一条记录都等价于一张索引卡片\footnote{原文为 In effect, each
@@ -829,7 +829,7 @@ record is the equivalent of an index card.}. 与单行数据相比, 使用 awk �
 假设我们有一本地址薄, 其每一条记录的前面 4 行分别是名字, 街道地址, 城市
 和州, 在这 4 行之后, 可能包含一行额外的信息, 记录之间由一行空白行分开:
 \marginpar{83}
-\begin{shell}
+\begin{myverb}
     Adam Smith
     1234 Wall St., Apt. 5C
     New York, NY 10021
@@ -846,16 +846,16 @@ record is the equivalent of an index card.}. 与单行数据相比, 使用 awk �
     555 Fifth Ave
     New York, NY
     212 586-2400
-\end{shell}
+\end{myverb}
 
 如果记录是由空白行分隔的, 那么它们可以被直接处理: 若记录分隔符 \verb'RS'
 被设置成空值 (\verb'RS=""'), 则每一个行块都被当成一个记录, 于是 
-\begin{awkcode}
+\begin{myverb}
     BEGIN { RS = "" }
     /New York/
-\end{awkcode}
+\end{myverb}
 打印所有的, 含有 \verb'New York' 的记录, 而不管这个记录有多少行:
-\begin{shell}
+\begin{myverb}
     Adam Smith
     1234 Wall St., Apt. 5C
     New York, NY 10021
@@ -864,27 +864,27 @@ record is the equivalent of an index card.}. 与单行数据相比, 使用 awk �
     555 Fifth Ave
     New York, NY
     212 586-2400
-\end{shell}
+\end{myverb}
 如果记录按照这种方式打印出来, 则输出记录之间是不会有空白行的, 输入格式并
 不会被保留下来. 为了解决这个问题, 最简单的办法是把输出记录分隔符 \verb'ORS'
 设置成 \verb'\n\n':
-\begin{awkcode}
+\begin{myverb}
     BEGIN { RS = ""; ORS = "\n\n" }
     /New York/
-\end{awkcode}
+\end{myverb}
 
 假设我们想要输出 \verb'Smith''s 的全名和他的电话号码 (也就是第 1 行以 
 \verb'Smith' 结尾的记录的第 1 行与第 4 行), 如果每一行都表示一条记录, 那么 
 就比较容易, 只要把 \verb'FS' 设置成 \verb'\n' 即可:
 \marginpar{84}
-\begin{awkcode}
+\begin{myverb}
     BEGIN           { RS = ""; FS = "\n" }
     $1 ~ /Smith$/   { print $1, $4 } # name, phone
-\end{awkcode}
+\end{myverb}
 程序的输出是 
-\begin{shell}
+\begin{myverb}
     Adam Smith 212 555-4321
-\end{shell}
+\end{myverb}
 前面提过, 不管 \verb'FS' 的值是什么, 换行符总是多行记录的字段分隔符之一.
 如果 \verb'RS' 被设置成 \verb'""', 则默认的字段分隔符就是空格符, 制表符,
 以及换行符; 如果 \verb'FS' 是 \verb'\n', 则换行符就是唯一的字段分隔符.
@@ -899,7 +899,7 @@ awk 程序, 就可以把原来的程序应用到多行记录上. 第 1 个程序
 
 为了使过程更加具体, 现在让我们用 Unix 命令 \verb'sort' 对地址薄进行排序,
 下面的程序 \verb'pipeline' 按照姓氏对输入进行排序:
-\begin{awkcode}
+\begin{myverb}
     # pipeline to sort address list by last names
 
     awk '
@@ -917,7 +917,7 @@ awk 程序, 就可以把原来的程序应用到多行记录上. 第 1 个程序
             printf("\n")
           }
     '
-\end{awkcode}
+\end{myverb}
 
 第 1 个程序中, 函数 \verb'split($1, x, " ")' 把每个记录的第 1 行切割并保
 存到数组 \verb'x' 中, 返回元素的个数, 于是, 姓氏保存在 
@@ -941,7 +941,7 @@ awk 程序, 就可以把原来的程序应用到多行记录上. 第 1 个程序
 一个简单的例子, 仍然是地址薄, 不过每个记录都带有一个头部信息, 该信息
 指出了记录的某些特征 (比如职业), 跟在头部后面的是名字, 每条记录 (除了最
 后一条) 都由一个尾部结束, 尾部由一个空白行组成:
-\begin{shell}
+\begin{myverb}
     accountant
     Adam Smith
     1234 Wall St., Apt. 5C
@@ -961,20 +961,20 @@ awk 程序, 就可以把原来的程序应用到多行记录上. 第 1 个程序
     Dr. Susan Mark
     600 Mountain Avenue
     Murray Hill, NJ 07974
-\end{shell}
+\end{myverb}
 为了打印所有医生的记录, 范围模式是最简单的办法:
-\begin{awkcode}
+\begin{myverb}
     /^doctor/, /^$/
-\end{awkcode}
+\end{myverb}
 范围模式匹配以 \verb'doctor' 开始, 以空白行结束的记录 (\verb'/^$/' 匹配 
 一个空白行).
 
 为了从输出中移除掉头部信息, 我们可以用 
-\begin{awkcode}
+\begin{myverb}
     /^doctor/ { p = 1; next }
     p == 1
     /^$/      { p = 0; next }
-\end{awkcode}
+\end{myverb}
 这个程序使用了一个变量来控制行的打印, 如果当前输入行包含有期望的头部信息, 
 则 \verb'p' 被设置为 1, 随后的尾部信息将 \verb'p' 重置为 0 (也就是 \verb'p'
 的初始值). 因为仅当 \verb'p' 为 1 时才会把当前输入行打印出来, 所以只有
@@ -992,7 +992,7 @@ unformatted lines.}, 例如, 地址可能含有国家名称, 也可能不包括�
 
 处理结构化数据的一种方法是为记录的每一个字段加上一个名字或关键词, 例如,
 我们有可能如此组织一本支票薄:
-\begin{shell}
+\begin{myverb}
     check	1021
     to	Champagne Unlimited
     amount	123.10
@@ -1023,7 +1023,7 @@ unformatted lines.}, 例如, 地址可能含有国家名称, 也可能不包括�
     check	1025
     amount	75.75
     date	1/5/87
-\end{shell}
+\end{myverb}
 我们仍然使用多行记录, 记录之间用一个空白行分隔, 但是在记录内部, 每一个 
 数据都是自描述的: 每一个字段都由一个项目名称, 一个制表符, 及信息组成.
 这意味着不同的记录可以包含不同的字段, 即使是类似的字段, 其排列顺序也可以
@@ -1035,7 +1035,7 @@ unformatted lines.}, 例如, 地址可能含有国家名称, 也可能不包括�
 the value it corresponds to, but they are not otherwise connected.}.
 比如说, 如果我们想要计算存款与支票的总额, 只需要扫描存款项与支票项即可:
 \marginpar{87}
-\begin{awkcode}
+\begin{myverb}
     # check1 - print total deposits and checks
 
     /^check/   { ck = 1; next }
@@ -1055,18 +1055,18 @@ the value it corresponds to, but they are not otherwise connected.}.
             deposits += amt
         ck = dep = amt = 0
     }
-\end{awkcode}
+\end{myverb}
 输出是 
-\begin{shell}
+\begin{myverb}
     deposits $500.00, checks $418.95
-\end{shell}
+\end{myverb}
 
 程序非常简单, 只要输入数据格式正确, 不管记录中的项目以何种顺序出现, 程序 
 都能正确地工作. 但是程序也很脆弱, 它需要非常认真得初始化, 以及对文件结束
 标志的处理. 我们还有另一种方案可供选择, 那就是一次读取一条记录, 当需要时
 再对记录的项目进行挑选. 下面的程序也是对存款与支票进行求和, 但它使用了一
 个函数, 这个函数提取具有指定名字的项目的值:
-\begin{awkcode}
+\begin{myverb}
     # check2 - print total deposits and checks
 
     BEGIN           { RS = ""; FS = "\n" }
@@ -1084,22 +1084,22 @@ the value it corresponds to, but they are not otherwise connected.}.
         }
         printf("error: no field %s in record\n%s\n", name, $0)
     }
-\end{awkcode}
+\end{myverb}
 函数 \verb'field(s)' 在当前记录中搜索名字是 \verb's' 的项目, 如果找到, 就
 把该项的值返回.
 
 第 3 种方案是把记录的每一个字段都分割到一个关联数组中, 然后再对值进行访问.
 下面将要介绍的程序以一种更加紧凑的方式打印支票信息:
 \marginpar{88}
-\begin{shell}
+\begin{myverb}
       1/1/87  1021  $123.10  Champagne Unlimited
       1/2/87  1022   $45.10  Getwell Drug Store
       1/3/87  1023  $125.00  International Travel
       1/3/87  1024   $50.00  Carnegie Hall
       1/5/87  1025   $75.75  American Express
-\end{shell}
+\end{myverb}
 程序的代码是
-\begin{awkcode}
+\begin{myverb}
     # check3 - print check information
 
     BEGIN { RS = ""; FS = "\n" }
@@ -1116,7 +1116,7 @@ the value it corresponds to, but they are not otherwise connected.}.
         for (i in val)
             delete val[i]
     }
-\end{awkcode}
+\end{myverb}
 利用 \verb'sprintf', 我们在总额的前面加上了美元符, 然后 \verb'printf' 再对
 字符串进行右对齐后输出.
 

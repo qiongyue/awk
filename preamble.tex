@@ -71,20 +71,16 @@
 % the name of file or directory
 \newcommand\filename[1]{\texttt{#1}}
 
-% the content of file
-\newenvironment{file}%
-{\vspace{-1.0em}\verbatim}%
-{\endverbatim\vspace{-1.0em}}
-
-% awk program, from package verbatim
-\newenvironment{awkcode}%
-{\vspace{-1.0em}\verbatim}%
-{\endverbatim\vspace{-1.0em}}
-
-% shell command, from package verbatim
-\newenvironment{shell}%
-{\vspace{-1.0em}\verbatim}%
-{\endverbatim\vspace{-1.0em}}
+% my own verbatim environment, from package verbatim
+\newenvironment{myverb}%
+{
+    \vspace{-1.0em}
+    \verbatim
+}%
+{
+    \endverbatim
+    \vspace{-1.0em}
+}
 
 % pattern for many situations
 \newenvironment{pattern}%
