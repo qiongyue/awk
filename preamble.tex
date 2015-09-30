@@ -106,7 +106,8 @@
 % term in English
 \newcommand\term[1]{\textit{#1}}
 % term in Chinese
-\newcommand\cterm[1]{\textbf{#1}}
+\setCJKfamilyfont{kai}{FandolKai}
+\newcommand\cterm[1]{{\CJKfamily{kai}{#1}}}
 
 % subsection unnumbered
 %\CTEXsetup[number={}]{subsection}
