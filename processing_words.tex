@@ -22,13 +22,13 @@
 \texttt{rand} 每次被调用时都会返回 一个大于等于 0, 小于 1 的浮点数, 但是
 一般来说, 更通常的需求是返回一个 \texttt{1} 到 \texttt{n} 之间的随机整数,
 我们可以用 \texttt{rand} 来实现:
-\begin{awkcode}
+\begin{myverb}
     # randint - return random integer x, 1 <= x <= n
 
     function randint(n) {
         return int(n * rand()) + 1
     }
-\end{awkcode}
+\end{myverb}
 \texttt{randint(n)} 按比例调整 \texttt{rand} 的返回值, 调整后的值大于
 等于 \texttt{0} 并且小于 \texttt{n}, 将小数部分截去可以得到 \texttt{0} 
 到 \texttt{n-1} 的整数, 然后再加 1, 就是 \texttt{1} 到 \texttt{n} 之间的 
@@ -36,26 +36,26 @@
 
 我们可以用 \texttt{randint} 来随机选择一个字母:
 \marginpar{112}
-\begin{awkcode}
+\begin{myverb}
     # randlet - generate random lower-case letter
 
     function randlet() {
         return substr("abcdefghijklmnopqrstuvwxyz", randint(26), 1)
     }
-\end{awkcode}
+\end{myverb}
 
 利用 \texttt{randint}, 很容易就可以从一个 \texttt{n} 项的数组中随机选择一
 个元素:
-\begin{awkcode}
+\begin{myverb}
     print x[randint(n)]
-\end{awkcode}
+\end{myverb}
 一个更有趣的问题是从某个数组中随机选择几项, 被选中的项必须按照原来的顺序
 排列. 举例来说, 如果数组 \texttt{x} 按照升序排列, 则被选中的元素也要按照
 升序排列.
 
 函数 \texttt{choose} 从数组 \texttt{A} 的前 \texttt{n} 中随机选择
 \texttt{k} 个元素, 并按照原来的顺序打印出来:
-\begin{awkcode}
+\begin{myverb}
     # choose - print in order k random elements from A[1]..A[n]
 
     function choose(A, k, n,    i) {
@@ -65,7 +65,7 @@
                 k--
             }
     }
-\end{awkcode}
+\end{myverb}
 在函数内, \texttt{k} 是还需要打印的项的数目, \texttt{n} 是数组中等待检验
 的元素个数. 打印第 \texttt{i} 个元素的条件是 \verb'rand() < k/n', 每当有
 一个元素被打印出来, \texttt{k} 就递减一次, 每当判断条件 \verb'rand() < k/n'
@@ -87,7 +87,7 @@
 
 我们的下一个例子是废话生成器 (cliche generator),
 它根据已有的废话重新创建一个新的出来. 输入是一个句子集合:
-\begin{file}
+\begin{myverb}
     A rolling stone:gathers no moss.
     History:repeats itself.
     He who lives by the sword:shall die by the sword.
@@ -95,19 +95,19 @@
     Nature:abhors a vacuum.
     Every man:has a price.
     All's well that:ends well.
-\end{file}
+\end{myverb}
 冒号将主语和谓语分开. 我们的废话生成器随机选择一个主语与另一个谓语作组合,
 \marginpar{113}
 如果运气好的话, 可能会产生很有意思的格言警句:
-\begin{file}
+\begin{myverb}
     A rolling stone repeats itself.
     History abhors a vacuum.
     nature repeats itself.
     All's well that gathers no moss.
     He who lives by the sword has a price.
-\end{file}
+\end{myverb}
 程序的代码实现非常明确:
-\begin{awkcode}
+\begin{myverb}
     # cliche - generate an endless stream of cliches
     #     input:  lines of form subject:predicate
     #     output: lines of random subject and random predicate
@@ -117,7 +117,7 @@
     END   { for (;;) print x[randint(NR)], y[randint(NR)] }
 
     function randint(n) { return int(n * rand()) + 1 }
-\end{awkcode}
+\end{myverb}
 请注意, 程序中的死循环是有意为之.
 
 \subsection{随机语句}
@@ -140,7 +140,7 @@
 该规则开发一个语法分析器, 用来分析 awk 程序. 然而在这一章, 我们感兴趣的是
 规则的生成, 而不是分析. 举例来说, 类似 ``the boy walks slowly'' 和 ``the
 girl runs very very quickly'' 这样的句子可以用下面的语法来描述:
-\begin{file}
+\begin{myverb}
     Sentence -> Nounphrase Verbphrase
     Nounphrase -> the boy
     Nounphrase -> the girl
@@ -150,11 +150,11 @@ girl runs very very quickly'' 这样的句子可以用下面的语法来描述:
     Modlist -> very Modlist
     Adverb -> quickly
     Adverb -> slowly
-\end{file}
+\end{myverb}
 
 \marginpar{114}
 如下所示, 产生式为非终结符生成语句. 假设 \texttt{Sentence} 是起始非终结符,
 那么选择一条以该符号作为左部的产生式:
-\begin{file}
+\begin{myverb}
     Sentence -> Nounphrase Verbphrase
-\end{file}
+\end{myverb}
