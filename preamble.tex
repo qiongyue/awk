@@ -73,8 +73,14 @@
 
 % my own verbatim environment, from package verbatim
 \newenvironment{myverb}%
-{\verbatim}%
-{\endverbatim}
+{
+    \vspace{-1.0em}
+    \verbatim
+}%
+{
+    \endverbatim
+    \vspace{-1.0em}
+}
 
 
 % pattern for many situations
