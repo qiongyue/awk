@@ -29,7 +29,7 @@
 他程序. 大部分小节都包含对主要性质的总结.
 
 \pdfbookmark[1]{输入文件}{the_input_file_countries}
-\subsection*{输入文件\filename{countries}}
+\subsection*{输入文件\textbf{\filename{countries}}}
 \label{subsec:the_input_file_countries}
 
 作为本章许多 awk 程序的输入数据, 我们将使用文件 \filename{countries}. 每一
@@ -123,7 +123,7 @@
     \BEGIN 与 \END 是唯一两个不能省略动作的模式.
 \end{summary}
 
-\subsection{\BEGIN 与 \END}
+\subsection{\textbf{\BEGIN} 与 \textbf{\END}}
 \label{subsec:the_awk_language_begin_and_end}
 
 \BEGIN 与 \END 这两个模式匹配任何输入行. 实际情况是, 当 awk 从输入读取数据
@@ -1877,7 +1877,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
         \verb'system'.
     \end{enumerate}
 \end{summary}
-\subsection{\print 语句}
+\subsection{\textbf{\print} 语句}
 \label{subsec:the_print_statement}
 \print 语句具有形式:
 \begin{pattern}
@@ -1924,7 +1924,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 打印第 1 个与第 2 个字段, 两个字段之间没有输出字段分隔符插入, 这是因为
 \verb'$1 $2' 表示两个字符串的拼接.
 
-\subsection{\texttt{printf} 语句}
+\subsection{\textbf{\texttt{printf}} 语句}
 \label{subsec:the_printf_statement}
 
 \printf 用于产生格式化的输出. 它与 C 语言中的 \printf 函数很像, 但是 awk
@@ -2189,7 +2189,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 行都是一个单独的字段. 记录的长度是有限制的, 通常是 3000 个字符.
 关于如何处理多行记录, 在第 \ref{chap:data_processing} 章包含更多的讨论.
 
-\subsection{\texttt{getline} 函数}
+\subsection{\textbf{\texttt{getline}} 函数}
 \label{subsec:the_getline_function}
 
 函数 \verb'getline' 可以从当前输入行, 或文件, 或管道, 读取输入.
@@ -2378,7 +2378,7 @@ Awk 的数组与大多数其他语言最大的不同点是, 数组元素的下�
 这一节描述几种 awk 程序与其他命令合作的方式. 主要针对 Unix 系统, 在非
 Unix 系统上, 这里的例子可能无法工作或表现出不同的行为.
 
-\subsection{\texttt{system} 函数}
+\subsection{\textbf{\texttt{system}} 函数}
 \label{subsec:the_system_function}
 
 内建函数 \verb'system('\textit{expression}\verb')' 用于执行命令, 命令由
