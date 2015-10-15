@@ -490,3 +490,195 @@ matrices), 点阵图 (dotchart, 直方图的一种), 箱线图 (boxplot, 显示�
 \end{exercise}
 
 \marginpar{140}
+\section{\textbf{\texttt{sort}} 生成器}
+\label{sec:a_sort_generator}
+
+\cterm{如果} 你知道如何使用 Unix 命令 \texttt{sort} 的话, 那么它将会是
+一个非常强大的工具. 但是要记住它所有的选项是非常困难的, 而且对于 ``字段
+编号从零开始'' 这个事实, 你可能会觉得不太习惯. 作为小型语言的另一个训练,
+我们将开发一个 \texttt{sortgen} 程序, 它根据 由自然语言描述的规范说明
+来生成排序命令. \texttt{sortgen} 生成排序命令但并不执行 --- 这个工作留
+给用户, 因为用户在执行之前可能想要检查一下生成的命令.
+
+\texttt{sortgen} 的输入是一连串的单词或短语, 它们描述了有关排序的选项,
+比如字段分隔符, 排序键, 比较的方向或类型. 程序的目标是在尽可能宽松的
+语法规则下, 解决比较常见的情况, 比如输入
+\begin{file}
+    descending numeric order
+\end{file}
+的输出是
+\begin{shell}
+    sort -rn
+\end{shell}
+更复杂的一个输入是
+\begin{file}
+    field separator is :
+    primary key is field 1
+        increasing alphabetic
+    secondary key is field 5
+        reverse numeric
+\end{file}
+\texttt{sortgen} 产出的 \texttt{sort} 命令及其选项与第
+\ref{chap:reports_and_databases} 章的第一个 \texttt{sort} 命令等价:
+\begin{shell}
+    sort -t':' +0 -1 +4rn -5
+\end{shell}
+
+\texttt{sortgen} 的核心是一套规则集, 该规则集把单词与短语描述的排序
+选项翻译成对应的 \texttt{sort} 命令行选项. 规则集通过 \patact 语句
+实现, 模式用于匹配选项的描述字符串, 而动作则计算相应的命令行选项. 比如,
+只要选项描述字符串中出现了 ``unique'' 或 ``discard identical'', 就把它
+们当作选项 \texttt{-u}, 这个选项的功能是忽略重复条目. 类似的, 字段分隔符
+假设是制表符, 可是如果描述中出现了 ``separate'' 这样的字眼, 那就把字
+段分隔符设置成对应的单个字符.
+
+最难的部分是多个排序键的处理, 每一个排序键都可以跨越多个字段. 识别
+排序键的关键词是 ``key''. 如果描述中出现了这个词, 那么就把一个或两个
+互相隔离的数字收集起来当作字段编号. ``key'' 的每一次出现都会为新
+的排序键收集选项. 排序键私有的选项包括空格抑制 (\texttt{-b}),
+字典序 (\texttt{-d}), 忽略大小写 (\texttt{-f}), 数字序 (\texttt{-n}),
+和逆序 (\texttt{-r}).
+\marginpar{141}
+\begin{awkcode}
+    # sortgen - generate sort command
+    #   input:  sequence of lines describing sorting options
+    #   output: Unix sort command with appropriate arguments
+
+    BEGIN { key = 0 }
+
+    /no |not |n't / { print "error: can't do negatives:", $0; ok = 1 }
+
+    # rules for global options
+            { ok = 0 }
+    /uniq|discard.*(iden|dupl)/  { uniq = " -u"; ok = 1 }
+    /separ.*tab|tab.*sep/        { sep = "t'\t'"; ok = 1 }
+    /separ/ { for (i = 1; i <= NF; i++)
+                  if (length($i) == 1)
+                      sep = "t'" $i "'"
+              ok = 1
+            }
+    /key/   { key++; dokey(); ok = 1 } # new key; must come in order
+
+    # rules for each key
+
+    /dict/                            { dict[key] = "d"; ok = 1 }
+    /ignore.*(space|blank)/           { blank[key] = "b"; ok = 1 }
+    /fold|case/                       { fold[key] = "f"; ok = 1 }
+    /num/                             { num[key] = "n"; ok = 1 }
+    /rev|descend|decreas|down|oppos/  { rev[key] = "r"; ok = 1 }
+    /forward|ascend|increas|up|alpha/ { next }    # this is sort's default
+    !ok   { print "error: can't understand:", $0 }
+
+    END {                        # print flags for each key
+        cmd = "sort" uniq
+        flag = dict[0] blank[0] fold[0] rev[0] num[0] sep
+        if (flag) cmd = cmd " -" flag
+        for (i = 1; i <= key; i++)
+            if (pos[i] != "") {
+                flag = pos[i] dict[i] blank[i] fold[i] rev[i] num[i]
+                if (flag) cmd = cmd " +" flag
+                if (pos2[i]) cmd = cmd " -" pos2[i]
+            }
+        print cmd
+    }
+
+    function dokey(    i) {      # determine position of key
+        for (i = 1; i <= NF; i++)
+            if ($i ~ /^[0-9]+$/) {
+                pos[key] = $i - 1    # sort uses 0-origin
+                break
+            }
+        for (i++; i <= NF; i++)
+            if ($i ~ /^[0-9]+$/) {
+                pos2[key] = $i
+                break
+            }
+        if (pos[key] == "")
+            printf("error: invalid key specification: %s\n", $0)
+        if (pos2[key] == "")
+            pos2[key] = pos[key] + 1
+    }
+\end{awkcode}
+
+\marginpar{142}
+为了避免处理类似于 ``don't discard duplicates'' 或 ``no numeric data'' 
+这样的输入, \texttt{sortgen} 会拒绝含有否定短语的行, 接下来的规则处理
+全局选项, 然后是针对当前排序键的选项, 如果程序无法理解某一行的意思,
+就会向用户打印一条消息.
+
+这个程序虽然不够聪明, 但是, 如果用户想要用它来获取正确的答案, 而不是
+诱导它犯错, 那么\texttt{sortgen} 仍然是一个很有用的工具.
+
+\begin{exercise}
+    实现一个新版的 \texttt{sortgen}, 它提供了访问 \texttt{sort} 全部功能
+    的方法, 要求程序能够检测出不一致的请求, 比如同时按照字典序与数值对
+    数据进行排序.
+\end{exercise}
+
+\begin{exercise}
+    在对输入语言规范性不作过多要求的前提下, 如何提高 \texttt{sortgen} 
+    的精确度.
+\end{exercise}
+
+\begin{exercise}
+    写一个程序, 把一个排序命令翻译成对应的英文句子, 然后再把句子作
+    为 \texttt{sortgen} 的输入.
+\end{exercise}
+
+\section{逆波兰式计算器}
+\label{sec:a_reverse_polish_calculator}
+
+假设我们现在想要一个计算器, 用来结算支票或计算数学表达式的值. Awk 本身
+很适合处理这种计算工作, 但是每次程序发生变化时, 我们都必须重新运行.
+我们需要一个随着表达式的输入, 可以自动读取并运算的计算器程序.
+
+为了避免开发语法解析器, 我们要求用户按照逆波兰表示法输入表达式. (``逆''
+指的是运算符跟在操作数的后面, ``波兰'' 是因为这种表示法是波兰数学家
+Jan Lukasiewicz 发明的). 中缀表达式
+\begin{shell}
+    (1 + 2) * (3 - 4) / 5
+\end{shell}
+写成逆波兰表示法变成
+\begin{shell}
+    1 2 + 3 4 - * 5 /
+\end{shell}
+逆波兰式不需要括号 --- 如果提前知道运算符的操作数个数, 那么表达式就不会
+有歧义. 逆波兰式非常适合用栈来处理, 由于这个特点, 许多编程语言 (包括
+Forth 和 Postscript) 和口袋计算器都把它作为基本表示法来使用.
+
+我们的第一个计算器只能用来计算采用逆波兰式表示法表示的数学表达式,
+所有的运算符与操作数都用空格分开. 如果某个字段是操作数, 就把它入栈;
+如果是运算符, 就对栈顶的操作数执行对应的运算. 每当一个输入行结束时,
+打印栈顶元素的值, 并把它弹出.
+\marginpar{143}
+\begin{awkcode}
+    # calc1 - reverse-Polish calculator, version 1
+    #   input:  arithmetic expressions in reverse Polish
+    #   output: values of expressions
+
+    {   for (i = 1; i <= NF; i++)
+            if ($i ~ /^[+-]?([0-9]+[.]?[0-9]*|[.][0-9]+)$/) {
+                stack[++top] = $i
+            } else if ($i == "+" && top > 1) {
+                stack[top-1] += stack[top]; top--
+            } else if ($i == "-" && top > 1) {
+                stack[top-1] -= stack[top]; top--
+            } else if ($i == "*" && top > 1) {
+                stack[top-1] *= stack[top]; top--
+            } else if ($i == "/" && top > 1) {
+                stack[top-1] /= stack[top]; top--
+            } else if ($i == "^" && top > 1) {
+                stack[top-1] ^= stack[top]; top--
+            } else {
+                printf("error: cannot evaluate %s\n", $i)
+                top = 0
+                next
+            }
+        if (top == 1)
+            printf("\t%.8g\n", stack[top--])
+        else if (top > 1) {
+            printf("error: too many operands\n")
+            top = 0
+        }
+    }
+\end{awkcode}
