@@ -335,7 +335,7 @@ Report No. 3       POPULATION, AREA, POPULATION DENSITY         January 1, 1988
 累加总人口, 总人口比重, 总面积, 总面积比重, 这些信息在 \END 中被打印出来.
 
 \verb'form3' 在打印完每个大洲的汇总信息之后, 再打印合计信息, 但是一般情况
-下, 除非读取到一个新的大洲, 否则它不会知道是否已经处理完所有的条目, 
+下, 除非读取到一个新的大洲, 否则它不会知道是否已经处理完所有的条目,
 解决这种 ``我们已经走得太远了 (We've gone too far)'' 问题是 control-break
 编程的经典例子. 解决办法是在打印之前检查每一个输入行, 判断是否需要为
 前一个数据组生成合计信息, 同样的检查也出现在了 \END 中, 所以计算工作最好
@@ -599,7 +599,7 @@ are, then do the positioning for you.}. 为打印程序写一个 awk 程序, 该
 \end{myverb}
 
 \begin{exercise}
-    修改 \texttt{info}: 参数通过 \texttt{ARGV} 传递进来, 而不是由 shell 
+    修改 \texttt{info}: 参数通过 \texttt{ARGV} 传递进来, 而不是由 shell
     进行替换.
 \end{exercise}
 

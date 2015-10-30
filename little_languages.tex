@@ -4,7 +4,7 @@
 \marginpar{131}
 
 人们经常使用 awk 开发 ``小型语言'' 的翻译器 (``小型语言'' 指的特定于
-某些应用领域的专用编程语言), 
+某些应用领域的专用编程语言),
 开发翻译器的原因主要有三点. 首先, 它可以帮助你了解语言处理程序的工作流程.
 本章的第一个例子是一个汇编程序, 虽然只有 20 来行, 但已经包含了汇编过程
 的核心要素, 为了执行汇编程序, 我们还要开发一个解释程序. 汇编程序与
@@ -12,7 +12,7 @@
 后缀计算器, 和 awk 子集的递归下降分析器.
 
 第二个原因是在实际工作中, 为了实现一个专用的编程语言, 通常需要投入大
-量的精力与财力, 不过在这之前, 我们有必要测试一下新语言的语法和语义. 
+量的精力与财力, 不过在这之前, 我们有必要测试一下新语言的语法和语义.
 作为示例, 本章讨论了一个画图语言和一个参数设置语言, 后者用于设置排序命令
 的参数.
 
@@ -29,7 +29,7 @@
         3.0);
     \draw[thick]
         (4.0, 3.0) -- (4.0, 4.0) -- (1.0, 4.0) -- (1.0, 3.0) -- (4.0, 3.0);
-    
+
     \draw[thick,->]
         (-6.0, 3.5) -- (-4.0, 3.5);
     \draw[thick,->]
@@ -95,15 +95,15 @@
         \texttt{02}     & \texttt{put}  & 把累加器的值写到输出 \\
         \texttt{03}     & \texttt{ld M}  & 把地址为 \texttt{M} 的内存单元
         的值读取到累加器中 \\
-        \texttt{04}     & \texttt{st M}  & 把累加器的值存放到地址为 
+        \texttt{04}     & \texttt{st M}  & 把累加器的值存放到地址为
         \texttt{M} 的内存单元中 \\
-        \texttt{05}     & \texttt{add M} & 把地址为 \texttt{M} 的内存单元 
+        \texttt{05}     & \texttt{add M} & 把地址为 \texttt{M} 的内存单元
         的值与累加器的值相加, 再把结果存放到累加器中 \\
-        \texttt{06}     & \texttt{sub M} & 把地址为 \texttt{M} 的内存单元 
+        \texttt{06}     & \texttt{sub M} & 把地址为 \texttt{M} 的内存单元
         的值与累加器的值相减, 再把结果存放到累加器中 \\
         \texttt{07}     & \texttt{jpos M} & 如果累加器的值为正, 则跳转到
         内存地址 \texttt{M} \\
-        \texttt{08}     & \texttt{jz M} & 如果累加器的值为零, 则跳转到 
+        \texttt{08}     & \texttt{jz M} & 如果累加器的值为零, 则跳转到
         内存地址 \texttt{M}     \\
         \texttt{09}     & \texttt{j M}  & 跳转到内存地址 \texttt{M} \\
         \texttt{10}     & \texttt{halt} & 停止执行 \\
@@ -114,7 +114,7 @@
 \end{center}
 \end{figure}
 
-汇编语言程序由语句序列组成, 每一条语句都包括三个部分: 标号, 操作符, 
+汇编语言程序由语句序列组成, 每一条语句都包括三个部分: 标号, 操作符,
 操作数, 任意一个部分都可以省略, 标号如果存在, 则必须是所在行的第一个
 字段. 程序可以包含 awk 形式的注释. 这里有一个简单的汇编语言程序, 它
 的功能是输出多个整数的和, 0 表示输入结束.
@@ -244,8 +244,8 @@
 \end{exercise}
 
 \begin{exercise}
-    适当扩大汇编语言的规模, 比如添加错误处理代码与其他条件判断指令. 为了 
-    方便用户使用, 你会怎么处理立即数, 比如 \texttt{add = 1} (如果 
+    适当扩大汇编语言的规模, 比如添加错误处理代码与其他条件判断指令. 为了
+    方便用户使用, 你会怎么处理立即数, 比如 \texttt{add = 1} (如果
     不支持立即数, 就必须要求用户自己创建一个名为 \texttt{one} 的
     内存单元)?
 \end{exercise}
@@ -264,19 +264,19 @@
 \label{sec:a_language_for_drawing_graphs}
 
 利用字段分割操作, 很容易就可以对我们自己定义的汇编语言作词法和语法分析,
-这种简易性对一些高级语言来说同样成立. 我们的下一个例子是 \texttt{graph} 
+这种简易性对一些高级语言来说同样成立. 我们的下一个例子是 \texttt{graph}
 的语言处理程序, \texttt{graph} 是一种用来画数据坐标图的原型语言. 输入
 是一张图的规范说明, 规范说明的每一行都表示一个数据点, 或坐标轴的标签
 信息. 数据点由一对 \textit{x}-\textit{y} 表示, 如果只有一个 \textit{y},
-则 \textit{x} 是从 1 开始的递增序列, 即 1, 2, 3, ..., 
+则 \textit{x} 是从 1 开始的递增序列, 即 1, 2, 3, ...,
 An optional nonnumeric plotting character can follow either form of data
 value\footnote{TODO}. 标签信息由一个关键词和多个参数值组成:
 \begin{pattern}
 \indent\texttt{label}\ \textit{caption} \par
 \indent\texttt{range}\ \textit{xmin}\ \textit{ymin}\ \textit{xmax}\
-    \textit{ymax} \par 
-\indent\texttt{left ticks}\ \ \textit{t}$_1$\ \textit{t}$_2$ ... \par 
-\indent\texttt{bottom ticks}\ \ \textit{t}$_1$\ \textit{t}$_2$ ... \par 
+    \textit{ymax} \par
+\indent\texttt{left ticks}\ \ \textit{t}$_1$\ \textit{t}$_2$ ... \par
+\indent\texttt{bottom ticks}\ \ \textit{t}$_1$\ \textit{t}$_2$ ... \par
 \indent\texttt{height}\ \textit{number}\par
 \indent\texttt{width}\ \textit{number}\par
 \end{pattern}
@@ -329,19 +329,19 @@ value\footnote{TODO}. 标签信息由一个关键词和多个参数值组成:
 10000 -                                                                        |
       |                                                                        |
       |---------|----------|---------|----------|---------|----------|---------|
-               1930       1940      1950       1960      1970       1980        
-                        Annual Traffic Deaths, USA, 1925-1984                   
+               1930       1940      1950       1960      1970       1980    
+                        Annual Traffic Deaths, USA, 1925-1984               
 \end{file}
 }
 
-\texttt{graph} 的处理程序分为两个阶段. 主循环读取并解析图的规范说明, 
+\texttt{graph} 的处理程序分为两个阶段. 主循环读取并解析图的规范说明,
 使用模式辨认不同类型的语句. 图的中间表示形式存放在若干个数组与变量中,
 如果必要的话, \texttt{END} 据此计算值的范围, 然后开始绘制边框, 刻度,
 标签和数据点. 输出操作被分散在若干个函数中, 这样的话, 即使以后要为
 特定的设备对代码进行修改, 也可以把修改局限在小范围内.
 
 到目前为止, 这是我们看过的最长的 awk 程序, 大约有 100 行, 其实它是本书
-第二长的程序. 不过不要担心, 程序把一个大任务分成若干个小步骤来完成, 
+第二长的程序. 不过不要担心, 程序把一个大任务分成若干个小步骤来完成,
 所以每个部分都很简短.
 \marginpar{137}
 \begin{awkcode}
@@ -452,7 +452,7 @@ Awk 很适合处理面向模式的 \texttt{graph} 语言, 之所以这样说是�
 开始: 既方便用户使用, 也方便处理.
 
 \texttt{graph} 是坐标绘图语言 \texttt{grap} 的简化版本, 而 \texttt{grap}
-是绘图语言 \texttt{pic} 的预处理器. 
+是绘图语言 \texttt{pic} 的预处理器.
 \marginpar{139} 当同时使用 \texttt{grap}, \texttt{pic} 与 \texttt{troff}
 时, 同样的数据与几乎相同的描述可以生成下面这张图片:\footnote{TODO}
 
@@ -601,7 +601,7 @@ matrices), 点阵图 (dotchart, 直方图的一种), 箱线图 (boxplot, 显示�
 \end{awkcode}
 
 \marginpar{142}
-为了避免处理类似于 ``don't discard duplicates'' 或 ``no numeric data'' 
+为了避免处理类似于 ``don't discard duplicates'' 或 ``no numeric data''
 这样的输入, \texttt{sortgen} 会拒绝含有否定短语的行, 接下来的规则处理
 全局选项, 然后是针对当前排序键的选项, 如果程序无法理解某一行的意思,
 就会向用户打印一条消息.
@@ -616,7 +616,7 @@ matrices), 点阵图 (dotchart, 直方图的一种), 箱线图 (boxplot, 显示�
 \end{exercise}
 
 \begin{exercise}
-    在对输入语言规范性不作过多要求的前提下, 如何提高 \texttt{sortgen} 
+    在对输入语言规范性不作过多要求的前提下, 如何提高 \texttt{sortgen}
     的精确度.
 \end{exercise}
 
@@ -682,7 +682,7 @@ Forth 和 Postscript) 和口袋计算器都把它作为基本表示法来使用.
         }
     }
 \end{awkcode}
-对于输入 
+对于输入
 \begin{file}
     1 2 + 3 4 - * 5 /
 \end{file}
@@ -690,18 +690,18 @@ Forth 和 Postscript) 和口袋计算器都把它作为基本表示法来使用.
 
 我们的第二个逆波兰式计算器支持用户自定义变量, 并且可以调用数学函数.
 变量名由字母开始, 后跟字母或数字, 语句 \textit{var}\texttt{=} 表示把
-栈顶元素弹出, 并赋值给变量 \textit{var}. 如果输入行以赋值语句结束, 
+栈顶元素弹出, 并赋值给变量 \textit{var}. 如果输入行以赋值语句结束,
 则不会打印出任何值. 一个典型的交互过程看起来就像这样 (由程序打印的内容
 向右缩进):
 \begin{shell}
     0 -1 stan2 pi=
-    pi 
+    pi
         3.1415927
     355 113 / x= x
         3.1415929
     x pi /
         1.0000001
-    2 sqrt 
+    2 sqrt
         1.4142136
 \end{shell}
 直接对前一个程序进行扩展, 就可以得到新版的计算器:
@@ -791,11 +791,11 @@ writing a full-fledged parser, as one would in any language}.
 \end{tabbing}
 
 该语法规则不仅描述了数学表达式的有效形式, 还规定了运算符的优先级和结合
-性. 例如, 一个 \textit{expr} 是多个 \textit{term} 的和或差, 而一个 
+性. 例如, 一个 \textit{expr} 是多个 \textit{term} 的和或差, 而一个
 \textit{term} 由多个 \textit{factor} 组成, 这确保了乘除在加减之前完成.
 
 我们可以把解析过程画成一张语句图来帮助理解, 这与第
-\ref{chap:processing_words} 章所描述的生成过程刚好相反. 比如, 表达式 
+\ref{chap:processing_words} 章所描述的生成过程刚好相反. 比如, 表达式
 \texttt{1 + 2 * 3} 的解析过程是:
 \begin{center}
 \begin{tikzpicture}
@@ -837,10 +837,10 @@ writing a full-fledged parser, as one would in any language}.
 \end{tikzpicture}
 \end{center}
 
-为了开发中缀计算器, 我们需要一个表达式解析程序. 只需要多花点精力, 
+为了开发中缀计算器, 我们需要一个表达式解析程序. 只需要多花点精力,
 就可以利用语法规则来构造解析器, 除此之外, 它还可以用来组织程序.
 为每一个非终结符写一个函数: 程序使用函数 \texttt{expr}
-处理由加号或负号分隔的 \textit{term}, 使用函数 \texttt{term} 处理 
+处理由加号或负号分隔的 \textit{term}, 使用函数 \texttt{term} 处理
 由乘号或除号分隔的 \textit{factor}, 最后, 使用函数 \texttt{factor} 来
 识别数字和被括号包围起来的 \textit{expr}.
 
@@ -956,11 +956,11 @@ C 版本 awk 程序的一种方式, C 程序运行起来更快, 也更容易扩�
 \begin{tabbing}
     \textit{program}\hspace{2em}\=$\to$\hspace{2em}\=\textit{opt-begin pa-stats
     opt-end}\\
-    \textit{opt-begin}\>$\to$\>\texttt{BEGIN}\ \textit{statlist}\ |\ 
+    \textit{opt-begin}\>$\to$\>\texttt{BEGIN}\ \textit{statlist}\ |\
     \texttt{""}\\
-    \textit{opt-end}\>$\to$\>\texttt{END}\ \textit{statlist}\ |\ 
+    \textit{opt-end}\>$\to$\>\texttt{END}\ \textit{statlist}\ |\
     \texttt{""}\\
-    \textit{pa-stats}\>$\to$\>\textit{statlist}\ |\ \textit{pattern}\ |\ 
+    \textit{pa-stats}\>$\to$\>\textit{statlist}\ |\ \textit{pattern}\ |\
     \textit{pattern statlist} \\
     \textit{pattern}\>$\to$\>\textit{expr}\\
     \textit{statlist}\>$\to$\>\verb'{'\ \textit{stats}\ \verb'}'\\
@@ -995,8 +995,8 @@ C 版本 awk 程序的一种方式, C 程序运行起来更快, 也更容易扩�
 搜索的语句, 开头可能有 \texttt{BEGIN} 动作, 后面跟着一个 \patact 语句
 列表, 最后面可能还有 \texttt{END} 动作.
 
-在我们的递归下降语法分析器中, 词法分析由子例程 \texttt{advance} 完成, 
-它搜索下一个词法单元, 并把它保存到变量 \texttt{tok} 中. 每次识别到 
+在我们的递归下降语法分析器中, 词法分析由子例程 \texttt{advance} 完成,
+它搜索下一个词法单元, 并把它保存到变量 \texttt{tok} 中. 每次识别到
 \textit{stat} 时, 就产生一个输出, 下层函数返回的字符串会拼接成一个更
 长的字符串. 为了使输出更具有可读性, 程序会尝试在适当的地方加上制表符,
 嵌套的层次在变量 \texttt{nt} 中维护.
