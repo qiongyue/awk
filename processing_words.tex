@@ -502,6 +502,7 @@ girl runs very very quickly'' 这样的句子可以用下面的语法来描述:
 \texttt{N}).
 
 \begin{exercise}
+    \label{exer:quiz}
     修改 \texttt{quiz}: 对于同一道问题最多输出一次.
 \end{exercise}
 
@@ -546,6 +547,7 @@ girl runs very very quickly'' 这样的句子可以用下面的语法来描述:
 \end{file}
 
 \begin{exercise}
+    \label{exer:wordcount}
     修改单词计数程序: 不区分单词大小写, 于是 \texttt{The} 与
     \texttt{the} 被当作是同一个单词.
 \end{exercise}
@@ -591,6 +593,7 @@ girl runs very very quickly'' 这样的句子可以用下面的语法来描述:
 \end{awkcode}
 
 \begin{exercise}
+    \label{exer:fmt_justify}
     修改 \texttt{fmt}: 对齐输出文本的右边空白.
 \end{exercise}
 
@@ -710,10 +713,12 @@ symbolic names are replaced by suitable numbers. 原文显得有点突兀: 不�
 开始的行, 从而删除掉符号名定义.
 
 \begin{exercise}
+    \label{exer:lack_underscore}
     如果遗漏了符号名末尾的下划线, 会发生什么事?
 \end{exercise}
 
 \begin{exercise}
+    \label{exer:xref}
     修改 \texttt{xref}: 可以侦测到某个符号名的多次定义
 \end{exercise}
 
@@ -724,6 +729,7 @@ symbolic names are replaced by suitable numbers. 原文显得有点突兀: 不�
 \end{exercise}
 
 \begin{exercise}
+    \label{exer:xref_once}
     你有没有办法让 \texttt{xref} 只需要对输入数据遍历一次 ? ``遍历一次''
     对定义的放置位置而言, 隐含着什么限制条件?
 \end{exercise}
@@ -807,8 +813,9 @@ Unix 管道提供了一个三步骤的解决方案: 第一个程序生成每一�
 内容.
 
 \begin{exercise}
+    \label{exer:stop_list}
     为 \texttt{kwic} 添加一个 ``停止列表 (stop list)'', ``停止列表'' 指的是
-    不能看作关键词的单词集合, 比如 ``a'', ``the''.
+    不能被当作关键词的单词集合, 比如 ``a'', ``the''.
 \end{exercise}
 
 \begin{exercise}
@@ -1134,7 +1141,8 @@ actual data.}
 \end{exercise}
 
 \begin{exercise}
-    允许索引字中出现字面意义上的 \texttt{[}, \texttt{]}, \verb'~' 与
+    \label{exer:literal}
+    允许索引字中出现字面意义上的 \texttt{[}, \texttt{]}, \verb'~' 与 
     \verb'%'
 \end{exercise}
 
