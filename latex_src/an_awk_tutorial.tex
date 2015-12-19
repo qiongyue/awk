@@ -882,9 +882,9 @@ Awk 提供了数组, 用来存储一组相关的值. 虽然数组给予了 awk �
     END { print max, maxline }
 \end{myverb}
 \item 打印至少包含一个字段的行
-\begin{myverb}
-    $NF > 0
-\end{myverb}
+\begin{awkcode}
+    NF > 0
+\end{awkcode}
 \item 打印长度超过80个字符的行
 \begin{myverb}
     length($0) > 80
