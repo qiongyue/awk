@@ -1036,9 +1036,7 @@ comparison}'' 生成 ``\texttt{comparison, string}''. 旋转操作与 KWIC
     controlflow statements      control-flow statements 48
     ...
 \end{awkcode}
-前面几行应该能够阐明排序键与实际数据之间的区别.\footnote{原文为 The first
-    few lines should clarify the distinction between the sort key and the
-actual data.}
+读者应该可以从前面几行分辨出排序键和实际的数据.
 
 第二个排序命令对输入按照字母顺序排序, 同之前的一样, 选项 \texttt{-f}
 表示合并大小写字母, \texttt{-d} 表示按照字典序排序.
@@ -1135,23 +1133,18 @@ actual data.}
 \end{exercise}
 
 \begin{exercise}
-    构造一个准备单词与短语列表的工具程序, 利用该程序来自动创建索引.
-    在促成索引字与主题方面, \texttt{wordfreq} 所生成的单词频率列表
-    表现如何?\footnote{Attack the problem of creating an index
-        automatically by building tools that prepare lists of words,
-        phrases, etc. How well does the list of word frequencies produced
-        by \texttt{wordfreq} suggest index terms or topics?}
+    构造一个准备单词和短语列表的工具程序, 利用该程序来自动创建索引.
+    是否可以根据 \texttt{wordfreq} 生成的单词频率列表, 来决定哪些单词可
+    以成为索引项?
 \end{exercise}
 
 \section{小结}
 \label{sec:processing_words_summary}
 
 Awk 处理文本就像 C 或 Pascal 处理数字那样轻松 --- 自动管理存储, 内建运算
-符与内建函数提供了许多必需的功能. 结果是 awk 擅长于原型构造, 有时候即使
-是对产品化的使用来说, 原型也已足够\footnote{原文为 As a result, awk is
-    usually good for prototyping, and sometimes it is quite adequate for
-production use.}. 索引程序就是一个很好的例子 --- 我们使用该程序的另一个
-版本为本书制作索引.
+符与内建函数提供了许多必需的功能. 因此 awk 很适合构造原型, 有时候即使
+用在产品化上, 原型也已足够, 索引程序就是一个很好的例子 --- 我们使用该程
+序的另一个版本为本书制作索引.
 
 \subsection*{参考资料}
 我们的测试程序以 Unix 的测试程序为原型构造而来, 后者最初由 Doug McIlroy
